@@ -1,0 +1,9 @@
+## This function, the opposite of intersection only
+## operates on vectors (as.numeric, as.character)
+##
+## Vector doc: http://arrgh.tim-smith.us/atomic.html
+## outersect doc: https://www.r-bloggers.com/outersect-the-opposite-of-rs-intersect-function/
+outersect <- function(x, y) {
+  sort(c(x[!x%in%y],
+         y[!y%in%x]))
+}
