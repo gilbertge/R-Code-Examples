@@ -1,0 +1,6 @@
+## Cramer's V. Interpretation is the association between two vaiables.
+##    V may be viewed as the association between two variables as a 
+##    percentage of their maximum possible variation.
+library(lsr)
+
+cramersV(x, y)

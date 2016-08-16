@@ -1,0 +1,25 @@
+## Install psych package to describe data                               
+library("psych")                                                          
+
+## Calculate the descriptive statistics for a data frame                   
+descriptive.stats <- describe(corr, na.rm=TRUE, skew=FALSE, ranges=TRUE)
+
+## Keep variables to be reported
+keep_stats <- c("n", "mean", "se", "median", "max", "min")
+descriptive.stats <- descriptive.stats[keep_stats]
+
+## Construct a vector of variable names for reporting
+vars <- c("Grit", "FM01FIN", "FM01CU", "FM02FIN", "FM02CU", "FM03FIN", "FM03CU", "FM04FIN", "FM04CU", "FM4XCOMP")
+
+## Horizontally concatenate the vector of variable names 
+## with the descriptive statistics
+descriptive.stats <- cbind(vars, descriptive.stats)
+
+## Format the variable names for publication
+colnames(descriptive.stats) <- c("Variable", "n", "Mean", "SE", "Median", "Maximum", "Minimum")
+
+## Output the table of descriptive statistics
+sink("descriptive statistics.txt")
+## Create LaTeX table for inclusion as checklist
+print(xtable(descriptive.stats, type="latex", digits=2, caption="Descriptive statistics for grit, semester cumulative, and final scores, and comprehensive exam score"), include.rownames=FALSE, caption.placement="top")
+sink()

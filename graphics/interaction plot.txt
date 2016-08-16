@@ -1,0 +1,35 @@
+## Store the default PAR parameters to
+## restore run: par(.pardefault)
+.pardefault <- par(no.readonly = T)
+
+## Make the outer margin at the bottom of the plot large:
+## c(bottom, left, top, right)
+par(oma = c(4, 1, 1, 1))
+
+layout(rbind(1, 2), height=c(7, 1))  # put legend on bottom 1/8th of the chart 
+
+interaction.plot(factor(df$female), factor(df$race), df$bmi,
+                 type="b", 
+                 col=c(1:4),
+                 lty=c(1:4),
+  	             leg.bty="o", 
+  	             ylim=c(28, 30),
+  	             lwd=2,
+  	             xlab=FALSE,
+  	             legend=FALSE,
+  	             pch=c(18,24,22, 1),	
+                 xaxt="n",
+                 ylab="Body Mass Index", 
+                 main="Interaction Plot of Race and Gender")
+
+axis(1, labels=c("Male", "Female"), at=1:2)
+
+# xpd = TRUE tells R that it is OK to plot outside the region horiz = TRUE
+# tells R that I want a horizontal legend
+
+# setup for no margins on the legend 
+par(mar=c(0, 0, 0, 0)) 
+plot.new() 
+
+legend("bottom", legend=c("White","Black","Asian","Other"), pch = c(18, 24, 22, 1), 
+col=c(1:4), lty=c(4, 3, 2, 1), horiz=TRUE, xpd=TRUE, inset=c(0, -25))

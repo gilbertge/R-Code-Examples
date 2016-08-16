@@ -1,0 +1,59 @@
+## Bias-corrected-and-accelerated nonparametric bootstrap
+## Reference: Good, P. (2005). Introduction to statistics 
+##            through resampling methods and R/S-plus. 
+##            Hoboken, NJ: John Wiley & Sons, Inc.
+
+
+## Download, unzip, and install the BOOT package
+install.packages(boot)
+
+## Load supporting functions of BOOT into computer memory
+## R imposes this requirement to keep the amount of memory 
+## its program uses to a minimum.
+library(boot)
+
+## A function to to calculate the mean of
+## bootstrap samples
+f.mean    <- function(y, id) {
+                              mean( y[id] )
+                             }
+                             
+## A function to to calculate the median of
+## bootstrap samples
+f.median  <- function(y, id) {
+                              median( y[id] )
+                             }
+
+## A function to to calculate the variance of
+## bootstrap samples                            
+f.var     <- function(y, id) {
+                              median( y[id] )
+                             }
+## A function to calculate the difference in means between
+## bootstrap samples of GROUP1 and GROUP2
+f.mndiff  <- function(dframe, id) {
+                                   yvals <- dframe[[2]][id]
+                                   mean(yvals[dframe[[1]]=="GROUP1"])-   
+                                   mean(yvals[dframe[[1]]=="GROUP"]  
+                                  }
+## A function to calculate the difference in medians between
+## bootstrap samples of GROUP1 and GROUP2
+f.mdndiff <- function(dframe, id) {
+                                   yvals <- dframe[[2]][id]
+                                   median(yvals[dframe[[1]]=="GROUP1"])-   
+                                   median(yvals[dframe[[1]]=="GROUP"]  
+                                  }
+
+                            
+## Employ two fuctions to do the bootstrap analysis. The first 
+## is BOOT which takes the areguments:
+##    DATAFRAME - the dataframe to be analyzed;
+##    R.FUNCTION is a function constructed separately
+##       to generate and hold values of existing R statistics 
+##       functions such as mean, median, or variance; and
+##    NUMBER is the number of bootstrap samples you
+##       wis to be drawn.
+## boot.ci(boot ( DATAFRAME, R.FUNCTION, NUMBER), conf=.95)
+
+## Implement the bootstrap
+boot.ci(boot ( DATAFRAME, R.FUNCTION, 100000), conf=.95)

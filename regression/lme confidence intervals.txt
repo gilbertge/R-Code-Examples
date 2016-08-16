@@ -1,0 +1,23 @@
+library(boot)
+library(lme4)
+
+## Approximate CIs for glmer object
+(coeftbl <- as.data.frame(coef(summary(cd.final))))
+## Confidence intervals are exponentiated
+exp(with(coeftbl,
+     Estimate + outer(`Std. Error`, c(lower=-1, upper=1)) * sqrt(qchisq(0.95, 1))))
+
+## Calculate the relative risk of the independent variables. This cannot be done in ond step because 
+##    estimates of for the random effects are included in the confidence intervals. 
+## Calculate confidence intervals for effects
+##    We can also see that .sig01, which is our estimate of the variability in the random effects, 
+##    isn't very large and is well defined. This indicates we do not have a lack of precision between our
+##    groups - if we did this could be due to the effect being small between groups, we have too few groups to get a 
+##    more precise estimate, we have too few units within each group, or a combination of all of the above.
+##
+## Read more at: http://jaredknowles.com/journal/2014/5/17/mixed-effects-tutorial-2-fun-with-mermod-objects
+##
+round(exp((cbind(fixef(cd.final),
+                 confint(cd.final, level=0.95, method="boot", nsim=3, boot.type="perc")))), 
+                 digits=2
+     )

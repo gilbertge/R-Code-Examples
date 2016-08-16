@@ -1,0 +1,9 @@
+## To merge two data frames (datasets) horizontally, use the merge function. 
+##    In most cases, you join two data frames by one or more common key 
+##    variables (i.e., an inner join).
+##
+## Merge two data frames by ID
+total <- merge(data frameA,data frameB,by="ID")
+
+## Merge two data frames by ID and Country
+total <- merge(data frameA,data frameB,by=c("ID","Country"))

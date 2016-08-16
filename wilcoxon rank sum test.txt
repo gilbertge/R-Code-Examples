@@ -1,0 +1,2 @@
+## Wilcoxon Rank Sum Test
+wilcox.test(mini_score  ~ traditional_group, df)

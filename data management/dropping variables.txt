@@ -1,0 +1,3 @@
+## Delete unneeded variables
+drop <- names(raw) %in% c("trash1", "trash2", "trash3", "trash4")
+df <- raw[!drop]

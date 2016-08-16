@@ -1,0 +1,3 @@
+## Reorder reference levels of factors
+raw$medsch_location <- relevel(factor(raw$medsch_location), ref="3")
+raw$PGY <- relevel(factor(raw$pgy), ref="1")

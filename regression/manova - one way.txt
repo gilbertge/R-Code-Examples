@@ -1,0 +1,58 @@
+## http://www.uni-kiel.de/psychologie/rexrepos/posts/multMANOVA.html#one-way-manova
+manRes1 <- manova(cbind(mfd, gt.30.pct, curvature) ~ factor(group), data=df)
+
+## H0: The groups do not show any difference. If H0: is rejected then we must analyze data
+##    in a _____________ fashion.
+## Reference: https://onlinecourses.science.psu.edu/stat505/node/159
+##            http://www.ats.ucla.edu/stat/stata/output/Stata_MANOVA.htm
+##            http://ibgwww.colorado.edu/~carey/p7291dir/handouts/manova1.pdf
+##            https://statistics.laerd.com/spss-tutorials/one-way-manova-using-spss-statistics.php
+
+## Pillai Trace 
+## V=trace(H(H+E)−1)
+## Here, we are multiplying H by the inverse of the total sum of squares and cross 
+## products matrix T = H + E. If H is large relative to E, then the Pillai trace 
+## will take a large value. Thus, we will reject the null hypothesis if this 
+## test statistic is large.
+## Some statisticians consider it to be the most powerful and most robust 
+## of the four statistics.
+summary(manRes1, test="Pillai")
+
+## Hotelling-Lawley Trace 
+## T20=trace(HE−1)
+## Here, we are multiplying H by the inverse of E; then we take the trace of the 
+## resulting matrix. If H is large relative to E, then the Hotelling-Lawley trace 
+## will take a large value. Thus, we will reject the null hypothesis if this test 
+## statistic is large.
+## It is the sum of the roots of the product of the sum-of-squares matrix of the 
+## model and the sum-of-squares matrix of the error for the two linear regression 
+## functions and is a direct generalization of the F statistic in ANOVA. Similar to
+## Pillai's Trace.
+summary(manRes1, test="Hotelling-Lawley")
+ 
+## Wilk's Lambda 
+## Λ∗=|E||H+E|
+## Here, the determinant of the error sums of squares and cross products matrix E 
+## is divided by the determinant of the total sum of squares and cross products 
+## matrix T = H + E. If H is large relative to E, then |H + E| will be large relative 
+## to |E|. Thus, we will reject the null hypothesis if Wilk's lambda is small 
+## (close to zero).
+## This can be interpreted as the proportion of the variance in the outcomes 
+## that is not explained by an effect
+## The quantity (1 - Λ) is often interpreted as the proportion of variance in the 
+## dependent variables explained by the model effect. However, this quantity is not 
+## unbiased and can be quite misleading in small samples.
+summary(manRes1, test="Wilks")
+
+## Roy's Maximum Root: Largest eigenvalue of HE-1
+## Here, we multiply H by the inverse of E, and then compute the largest eigenvalue 
+## of the resulting matrix. If H is large relative to E, then the Roy's root will 
+## take a large value. Thus, we will reject the null hypothesis if this 
+## test statistic is large.
+## This is the largest of the roots of the product of the sum-of-squares matrix of 
+## the model and the sum-of-squares matrix of the error for the two linear regression 
+## functions. Because it is a maximum, it can behave differently from the other three 
+## test statistics. In instances where the other three are not significant and Roy's 
+## is significant, the effect should be considered insignificant.
+summary(manRes1, test="Roy")
+

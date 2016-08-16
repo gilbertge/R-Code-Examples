@@ -1,0 +1,60 @@
+####################################################################
+#
+# All Code and Comments Below (except code provided by Boris Mayer) are
+# Copyright Marc Schwartz
+# e-mail: marc_schwartz@me.com
+# This code is made available under the GNU Public License V2.0
+# This is free software and comes with ABSOLUTELY NO WARRANTY.
+#
+####################################################################
+
+
+# R Code to calculate various Measures of
+# Association for m x n tables
+# References include:
+# 1. Agresti A. (2002): Categorical Data Analysis, Second Edition, J. Wiley and Sons
+# 2. Stokes M., Davis C. & Koch G. (1997): Categorical Data Analysis Using the SAS System, SAS Institute
+# 3. Liebetrau A.M. (1983): Measures of Association (Sage University Papers Series on Quantitative Applications
+#    in the Social Sciences, Series no. 07-032), Sage Publications
+# 4. SAS Institute (1999): SAS/STAT User's Guide V8, SAS Institute
+# 5. SPSS, Inc. (2003): SPSS 11.5 Statistical Algorithms
+#    (http://www.spss.com/tech/stat/Algorithms/11.5/crosstabs.pdf)
+# 6. Sheskin DJ. (2004): Handbook of Parametric and Nonparametric Statistical Procedures, Chapman & Hall/CRC
+
+
+# MOST MEASURES TAKE A 2 DIMENSIONAL TABLE/MATRIX "x" AS
+# AN ARGUMENT
+
+# See the 'vcd' CRAN package for some examples and code
+# on calculations and p values
+
+## Reference: https://gist.github.com/marcschwartz/3665743
+
+# Calculate Lambda
+# Return 3 values:
+# 1. Lambda C~R
+# 2. Lambda R~C
+# 3. Lambda Symmetric (Mean of above)
+# x = table
+calc.lambda <- function(x)
+{
+  x <- matrix(as.numeric(x), dim(x))
+  
+  SumRmax <- sum(apply(x, 1, max))
+  SumCmax <- sum(apply(x, 2, max))
+  MaxCSum <- max(colSums(x))
+  MaxRSum <- max(rowSums(x))
+  n <- sum(x)
+
+  L.CR <- (SumRmax - MaxCSum) / (n - MaxCSum)
+  L.RC <- (SumCmax - max(rowSums(x))) / (n - MaxRSum)
+  L.S <- (SumRmax + SumCmax - MaxCSum - MaxRSum) /
+        ((2 * n) - MaxCSum - MaxRSum)
+
+  Llist <- list(L.CR, L.RC, L.S)
+  names(Llist) <- c("L.CR", "L.RC", "L.S")
+
+  print.noquote("Lambda:")
+
+  Llist
+}

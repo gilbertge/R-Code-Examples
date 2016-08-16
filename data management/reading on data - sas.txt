@@ -1,0 +1,12 @@
+# save SAS dataset in trasport format
+libname out xport 'c:/mydata.xpt';
+data out.mydata;
+set sasuser.mydata;
+run;
+
+# in R use the following code to read in transport dataset
+# character variables are converted to R factors 
+library(foreign)
+library(Hmisc)
+mydata <- sasxport.get("c:/mydata.xpt")
+# character variables are converted to R factors

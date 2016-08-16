@@ -1,0 +1,2 @@
+## Determine types of variables
+eapply(.GlobalEnv,typeof)

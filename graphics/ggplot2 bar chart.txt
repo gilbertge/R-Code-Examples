@@ -1,0 +1,6 @@
+## Load ggplot2 package for plots
+
+## Create a bar chart of the specialties of RUSM graduates
+ggplot(rusm, aes(x=Specialty))                                +  
+       geom_bar(aes(y=(..count..)/sum(..count..)))            + 
+       scale_y_continuous("Percent", labels=percent)      

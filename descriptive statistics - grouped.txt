@@ -1,0 +1,13 @@
+## Load plyr package for grouped descritptive statistics
+library(plyr)
+
+
+ddply(df, c("GROUP_VARIABLE"), QUANTITATIVE_VARIABLE,
+             n      = length(written),
+             mean   = round(mean(written, na.rm=TRUE), digit=1),
+             se     = round(sd(written, na.rm=TRUE) / sqrt(length(written)), digit=2),
+             median = round(median(written, na.rm=TRUE), digit=1),
+             iqr    = IQR(written, na.rm=TRUE),
+             max    = max(written, na.rm=TRUE),
+             min    = min(written, na.rm=TRUE)
+           )

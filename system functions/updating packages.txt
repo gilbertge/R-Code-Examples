@@ -1,0 +1,5 @@
+## Update any installed packages
+update.packages(ask = FALSE, repos = 'http://cran.rstudio.org')
+
+## Install knitr package as an example
+install.packages('knitr', repos = c('http://yihui.name/xran', 'http://cran.rstudio.org'))

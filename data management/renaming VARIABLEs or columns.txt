@@ -1,0 +1,16 @@
+library(plyr)
+rename(d, c("OLDVARNAME"="NEWVARNAME", ...))
+
+
+## Use the following code to rename more than one column in a data frame
+colnames(df) <- c("col1","col2", ...)
+
+# Rename column by name: change "beta" to "two"
+names(d)[names(d)=="beta"] <- "two"
+
+# You can also rename by position, but this is a bit dangerous if your data
+# can change in the future. If there is a change in the number or positions of
+# columns, then this can result in wrong data.
+
+# Rename by index in names vector: change third item, "gamma", to "three"
+names(d)[3] <- "three"

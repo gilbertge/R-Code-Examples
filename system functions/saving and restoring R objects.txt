@@ -1,0 +1,5 @@
+## Write a single R object to a file
+saveRDS(hpsa, "hpsa.rds")
+
+## Restore an R object
+hpsa2 <- readRDS("hpsa.rds")

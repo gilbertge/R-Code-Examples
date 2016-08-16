@@ -1,0 +1,131 @@
+###########################################################
+##                                                       ##
+##  Goodness-of-fit statistics for a logistic model.     ##
+## Input is the model object, with the number            ##
+## separated by a comma by the where the number of       ##
+## independent variables are entered.                    ##
+## If anyone is aware how to extract the numbe of        ##
+## independent variables from the mode please e-mail me  ##
+## so I can modify my code. Thank you.                   ##
+##    ggilbert@devrygroup.com                            ##
+##    g.eastham.gilbert@gmail.com                        ##
+##                                                       ##
+###########################################################
+lr.gof <- function(model, x)  {
+                           ## Code from: http://stackoverflow.com/questions/3337044/model-fit-statistics-for-a-logistic-regression
+                           ## Discussion of Goodness of Fit Statistics:
+                           ##    http://www.ats.ucla.edu/stat/mult_pkg/faq/general/Psuedo_RSquareds.htm
+                           
+                           ## Different approaches lead to various calculations of pseudo 
+                           ## R-squareds with regressions of categorical outcome variables. 
+                           ##
+                           ## APPROACH 1. R-squared as explained variability - The denominator 
+                           ## of the ratio can be thought of as the total variability in the 
+                           ## dependent variable, or how much y varies from its mean.  The 
+                           ## numerator of the ratio can be thought of as the variability 
+                           ## in the dependent variable that is not predicted by the model.  
+                           ## Thus, this ratio is the proportion of the total variability 
+                           ## unexplained by the model.  Subtracting this ratio from one 
+                           ## results in the proportion of the total variability explained 
+                           ## by the model.  The more variability explained, the better 
+                           ## the model.
+                           ##
+                           ## APPROACH 2. R-squared as improvement from null model to fitted 
+                           ## model - The denominator of the ratio can be thought of as the 
+                           ## sum of squared errors from the null model--a model predicting 
+                           ## the dependent variable without any independent variables.  In 
+                           ## the null model, each y value is predicted to be the mean of the 
+                           ## y values. Consider being asked to predict a y value without 
+                           ## having any additional information about what you are predicting.
+                           ## The mean of the y values would be your best guess if your aim is 
+                           ## to minimize the squared difference between your prediction and 
+                           ## the actual y value.  The numerator of the ratio would then be 
+                           ## the sum of squared errors of the fitted model.  The ratio is 
+                           ## indicative of the degree to which the model parameters improve 
+                           ## upon the prediction of the null model.  The smaller this ratio, 
+                           ## the greater the improvement and the higher the R-squared.
+                           ## 
+                           ## APPROACH 3. R-squared as the square of the correlation - The 
+                           ## term "R-squared" is derived from this definition.  R-squared is 
+                           ## the square of the correlation between the model's predicted 
+                           ## values and the actual values.  This correlation can range from 
+                           ## -1 to 1, and so the square of the correlation then ranges from 
+                           ## 0 to 1.  The greater the magnitude of the correlation between 
+                           ## the predicted values and the actual values, the greater the 
+                           ## R-squared, regardless of whether the correlation is positive 
+                           ## or negative.  
+                           ## 
+                           ## 
+                           ##                 
+                           ## In McFadden's R2 the log likelihood of the intercept model is 
+                           ## treated as a total sum of squares, and the log likelihood of 
+                           ## the full model is treated as the sum of squared errors 
+                           ## (like in approach 1). 
+                           ## The ratio of the likelihoods suggests the level of improvement 
+                           ## over the intercept model offered by the full model (like 
+                           ## in approach 2). 
+                           ##
+                           ## A likelihood falls between 0 and 1, so the log of a likelihood 
+                           ## is less than or equal to zero.  If a model has a very low 
+                           ## likelihood, then the log of the likelihood will have a larger 
+                           ## magnitude than the log of a more likely model.  Thus, a small 
+                           ## ratio of log likelihoods indicates that the full model is a 
+                           ## far better fit than the intercept model, hence better fit.
+                           ##
+                           ## If comparing two models on the same data, McFadden's would 
+                           ## be higher for the model with the greater likelihood.                            
+                                                     
+                                R2<-1-((model$deviance/-2)/(model$null.deviance/-2))
+                                cat("McFadden       R2=",R2,"\n")
+                           
+                           ## McFadden's adjusted mirrors the adjusted R-squared in OLS by 
+                           ## penalizing a model for including too many predictors. If the 
+                           ## predictors in the model are effective, then the penalty will 
+                           ## be small relative to the added information of the predictors.  
+                           ## However, if a model contains predictors that do not add 
+                           ## sufficiently to the model, then the penalty becomes noticeable 
+                           ## and the adjusted R-squared can decrease with the addition of 
+                           ## a predictor, even if the R-squared increases slightly. Note 
+                           ## negative McFadden's adjusted R-squared are possible.    
+                           
+                                R2<-1-(((model$deviance/-2)-x)/(model$null.deviance/-2))
+                                cat("McFadden (Adj) R2=",R2,"\n")
+
+                           ## Cox & Snell's mirrors approach 2 from the list above.  The 
+                           ## ratio of the likelihoods reflects the improvement of the full 
+                           ## model over the intercept model (the smaller the ratio, the 
+                           ## greater the improvement). Consider the definition of L(M).  
+                           ## L(M) is the conditional probability of the dependent variable 
+                           ##  given the independent variables. If there are N observations 
+                           ## in the dataset, then L(M) is the product of N such 
+                           ## probabilities.  Thus, taking the nth root of the product L(M) 
+                           ## provides an estimate of the likelihood of each Y value.  Cox & 
+                           ## Snell's presents the R-squared as a transformation of the 
+                           ## -2ln[L(MIntercept)/L(MFull)] statistic that is used to determine 
+                           ## the convergence of a logistic regression. Note that Cox & 
+                           ## Snell's pseudo R-squared has a maximum value that is not 1: if 
+                           ## the full model predicts the outcome perfectly and has a 
+                           ## likelihood of 1, Cox & Snell's is then 1-L(MIntercept)2/N, 
+                           ## which is less than one. 
+
+                                R2<-1-exp((model$deviance-model$null.deviance)/2*model$n)
+                                cat("Cox-Snell      R2=",R2,"\n")
+
+                           ## Nagelkerke/Cragg & Uhler's mirrors approach 2 from the list 
+                           ## above.  It adjusts Cox & Snell's so that the range of possible 
+                           ## values extends to 1. To achieve this, the Cox & Snell R-squared 
+                           ## is divided by its maximum possible value, 1-L(MIntercept)2/N.  
+                           ## Then, if the full model perfectly predicts the outcome and 
+                           ## has a likelihood of 1, Nagelkerke/Cragg & Uhler's R-squared = 1. 
+                           ## When L(Mfull) = 1, then R2 = 1; 
+                           ## When L(Mfull) = L(Mintercept), then R2 = 0.
+
+                                R2<-R2/(1-exp((-model$null.deviance)/model$n))
+                                cat("Nagelkerke     R2=",R2,"\n")
+
+                           ## The AIC is provided here for model comparison. Interpretation
+                           ## is the model with the lower AIC has the better fit.
+
+                                AIC<- model$deviance+2*2
+                                cat("AIC              =",AIC,"\n")
+                          }

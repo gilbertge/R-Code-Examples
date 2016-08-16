@@ -1,0 +1,65 @@
+## Load package for Bayesian regression
+library(arm)
+
+## For FINAL.PASSAGE quasi-separation or complete separation exists.
+## A discussion of separation can be seen here: 
+## http://stats.stackexchange.com/questions/11109/how-to-deal-with-perfect-separation-in-logistic-regression
+## 
+## One of the best and most thorough explanations of "quasi-complete 
+## separation" issues in maximum likelihood is Paul Allison's paper. 
+## He's writing about SAS software, but the issues he addresses are 
+## generalizable to any software:
+## 
+## Complete separation occurs whenever a linear function of x can 
+## generate perfect predictions of y
+##
+## Quasi-complete separation occurs when (a) there exists some coefficient 
+## vector b such that bxi ≥ 0 whenever yi = 1, and bxi ≤ 0* whenever **yi = 0 
+## and this equality holds for at least one case in each category of the 
+## dependent variable. In other words in the simplest case, for any dichotomous 
+## independent variable in a logistic regression, if there is a zero in the 2×2 
+## table formed by that variable and the dependent variable, the ML estimate for 
+## the regression coefficient does not exist.
+## 
+## Reference: http://www2.sas.com/proceedings/forum2008/360-2008.pdf
+## 
+## To address this problem, we will use Bayesian regression.
+## 
+## Bayesian analysis with non-informative prior assumptions as proposed by 
+## Gelman et al (2008). As Scortchi mentions, Gelman recommends to put a Cauchy 
+## prior with median 0.0 and scale 2.5 on each coefficient (normalized to have 
+## mean 0.0 and a SD of 0.5). This will regularize the coefficients and pull 
+## them just slightly towards zero. In this case it is exactly what you want. 
+## Due to having very wide tails the Cauchy still allows for large coefficients 
+## (as opposed to the short tailed Normal)
+##
+## Reference: Gelman et al (2008), "A weakly informative default prior 
+## distribution for logistic & other regression models", Ann. Appl. Stat., 2, 4 
+## http://projecteuclid.org/euclid.aoas/1231424214
+
+## Do Bayes regressions for Final Passage because we have
+## complete/quasi separation
+m2 <- bayesglm(final.passage ~                                                    
+                          traditional_group   +                                                  
+                          age                 + 
+                          hispanic            +
+                          ugpa                 
+                          ,                                  
+                          data = df,                                                            
+                          family = "binomial"                                                   
+          )                                                                        
+
+## Summarize the regression model
+summary(m2)                                                                     
+ 
+## Calculate the RR/OR and 95% confidence models for the final model                      
+round(exp(cbind(coef(m1), confint(m1))), digits=2)  
+                                                                                       
+## Calculate the RR/OR "manually" 
+round(exp(coef(m2)), digits=2)
+                     
+# Calculate the lower 95% CI for beta "manually
+exp(summary(m2)$coefficients[,1]-summary(m2)$coefficients[,2]*1.96)  
+
+# Calculate the upper 95% CI for beta  "manually                                                            
+exp(summary(m2)$coefficients[,1]+summary(m2)$coefficients[,2]*1.96)

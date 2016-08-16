@@ -1,0 +1,99 @@
+# Connect to the R Repository
+options(repos="http://lib.stat.cmu.edu/R/CRAN/")   
+## https://cran.cnr.berkeley.edu
+
+## Install R Bioconductor Packages for RNA-seq Analysis
+## http://www.bioconductor.org/install/
+source("http://bioconductor.org/biocLite.R")
+biocLite()
+
+
+install.packages("DT",               "/Users/gregoryegilbert/Library/R", dependencies=TRUE)
+install.packages("Hmisc",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("ICC",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("MASS",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Coefficient Alpha
+install.packages("R2DOC",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("R2DOCX",           "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("R2wd",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("RColorBrewer",     "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("RQDA",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("Rfacebook",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("Rook",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("SASmixed" ,        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("SnowballC",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("Zelig",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("abd",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("arm",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Bayesian Regression                                      
+install.packages("bestglm",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Best subsets regression 
+install.packages("boot",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Functions for bootstrapping - required for bootstrapped CIs in lmer/glmer 
+install.packages("broman",           "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("car",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Boxplot & leveneTest
+install.packages("checkpoint",       "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Locally install packages at specified data for reproducibility
+install.packages("classInt",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("coefficientalpha", "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("d3heatmap",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)   
+install.packages("dplyr",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE)   
+install.packages("devtools",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("dygraphs",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)   
+install.packages("elrm",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Exact logistic regression
+install.packages("foreign",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("fossil",           "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("gdata",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("ggmap",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE)   
+install.packages("ggplot2",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("glmulti",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Best subsets regression 
+install.packages("gmodels",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## SAS-like tables
+install.packages("irr",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("languageR",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("leaflet",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)   
+install.packages("lme4",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## (General) Linear Mixed Models
+install.packages("lmerTest",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("lmttest",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Install package for performing likelihood ratio test
+install.packages("logistf",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("lpSolve",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Inter-rater reliability
+install.packages("mapdata",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("mapproj",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("maps",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("maptools",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("multcomp",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("mvtnorm,           "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Multivariate Analysis (MANOVA
+install.packages("network3D",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)   
+install.packages("nlme",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("nnet",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("nortest",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Normality Testing: ad.test(), cvm.test(), lillie.test(), pearson.test(), sf.test() shapiro.test() is a a part of {stats}
+install.packages("pbbkrtest",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("pander",           "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("plyr",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("pscl",             "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## Vuong test for non-nested models (models without the same)
+install.packages("pwr",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("qcc",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("quantreg",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("raster",           "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("reshape",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("reshape2",         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("rms",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE) 
+install.packages("rtf",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("rworldmap"         "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("scatterD3",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)   
+install.packages("sp" ,              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("tikzDevice",       "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("tm",               "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("tufte",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("twitteR",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("varComp",          "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("vcd",              "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("wordcloud",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+install.packages("xtable",           "/Users/gregoryegilbert/Library/R", dependencies=TRUE)                                                                    ## 
+
+
+
+install.packages("knitr",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE, repos = c('http://yihui.name/xran', 'http://cran.rstudio.org'))
+install.packages("rmarkdown",        "/Users/gregoryegilbert/Library/R", dependencies=TRUE)
+install.packages("psych",            "/Users/gregoryegilbert/Library/R", dependencies=TRUE, repos='http://personality-project.org/r')
+
+
+## Update any installed packages
+update.packages(ask = FALSE, repos= c('http://cran.rstudio.org', 'http://personality-project.org/r', 'http://yihui.name/xran'))
+
+
+

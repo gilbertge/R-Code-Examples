@@ -1,0 +1,101 @@
+####################################################################
+#
+# All Code and Comments Below (except code provided by Boris Mayer) are
+# Copyright Marc Schwartz
+# e-mail: marc_schwartz@me.com
+# This code is made available under the GNU Public License V2.0
+# This is free software and comes with ABSOLUTELY NO WARRANTY.
+#
+####################################################################
+
+
+# R Code to calculate various Measures of
+# Association for m x n tables
+# References include:
+# 1. Agresti A. (2002): Categorical Data Analysis, Second Edition, J. Wiley and Sons
+# 2. Stokes M., Davis C. & Koch G. (1997): Categorical Data Analysis Using the SAS System, SAS Institute
+# 3. Liebetrau A.M. (1983): Measures of Association (Sage University Papers Series on Quantitative Applications
+#    in the Social Sciences, Series no. 07-032), Sage Publications
+# 4. SAS Institute (1999): SAS/STAT User's Guide V8, SAS Institute
+# 5. SPSS, Inc. (2003): SPSS 11.5 Statistical Algorithms
+#    (http://www.spss.com/tech/stat/Algorithms/11.5/crosstabs.pdf)
+# 6. Sheskin DJ. (2004): Handbook of Parametric and Nonparametric Statistical Procedures, Chapman & Hall/CRC
+
+
+# MOST MEASURES TAKE A 2 DIMENSIONAL TABLE/MATRIX "x" AS
+# AN ARGUMENT
+
+# See the 'vcd' CRAN package for some examples and code
+# on calculations and p values
+
+## Reference: https://gist.github.com/marcschwartz/3665743
+
+## GAMMA is dependent on CONCORDANT & DISCORDANT
+# Calculate CONcordant Pairs in a table
+# cycle through x[r, c] and multiply by
+# sum(x elements below and to the right of x[r, c])
+# x = table
+concordant <- function(x)
+{
+  x <- matrix(as.numeric(x), dim(x))
+  
+  # get sum(matrix values > r AND > c)
+  # for each matrix[r, c]
+  mat.lr <- function(r, c)
+  { 
+    lr <- x[(r.x > r) & (c.x > c)]
+    sum(lr)
+  }
+
+  # get row and column index for each
+  # matrix element
+  r.x <- row(x)
+  c.x <- col(x)
+
+  # return the sum of each matrix[r, c] * sums
+  # using mapply to sequence thru each matrix[r, c]
+  sum(x * mapply(mat.lr, r = r.x, c = c.x))
+}
+
+# Calculate DIScordant Pairs in a table
+# cycle through x[r, c] and multiply by
+# sum(x elements below and to the left of x[r, c])
+# x = table
+discordant <- function(x)
+{
+  x <- matrix(as.numeric(x), dim(x))
+  
+  # get sum(matrix values > r AND < c)
+  # for each matrix[r, c]
+  mat.ll <- function(r, c)
+  { 
+    ll <- x[(r.x > r) & (c.x < c)]
+    sum(ll)
+  }
+  
+  # get row and column index for each
+  # matrix element
+  r.x <- row(x)
+  c.x <- col(x)
+
+  # return the sum of each matrix[r, c] * sums
+  # using mapply to sequence thru each matrix[r, c]
+  sum(x * mapply(mat.ll, r = r.x, c = c.x))
+}
+  
+
+# Calculate Goodman-Kruskal gamma
+# x = table
+calc.gamma <- function(x)
+{
+  x <- matrix(as.numeric(x), dim(x))
+  
+  c <- concordant(x)
+  d <- discordant(x)
+
+  gamma <- (c - d) / (c + d)
+
+  print.noquote("Gamma:")
+
+  gamma
+}

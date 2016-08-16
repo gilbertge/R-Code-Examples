@@ -1,0 +1,8 @@
+## Load foreign package to import SPSS data                               
+library("foreign")  
+
+## Set the working directory                                            
+setwd("/Users/gregoryegilbert/Documents/projects/chung/co_occurence")               
+
+## Read in SPSS SAV file
+df <- read.spss("co_occurence_preliminary.sav", to.data.frame=TRUE)

@@ -1,0 +1,237 @@
+## Set the CRAN mirror site for downloading of all packages
+## Find the URL of the mirror using the "getCRANmirrors()"
+## command. Set the URL using the "options(repos="URL")"
+   options(repos="http://lib.stat.cmu.edu/R/CRAN/")
+
+## Install and update the required packages used
+   myPackages <- c("grid", "plotrix")
+   install.packages(myPackages,dependencies=TRUE)
+   update.packages(checkBuilt=TRUE, ask=FALSE)
+## library(package) and require(package) both load the package
+## with name package. require is designed for use inside other functions
+   library("grid")
+   require(plotrix)
+
+## To get Times-like font use this statement
+## "ps" is "pointsize"
+## par(family="serif", ps="10")
+
+## To get Arial-like font use this statement
+## "ps" is "pointsize"
+   par(ps="0.50")
+
+## Create a function that will produce a box containing three labels,
+## with no background shading among the labels since we will use
+## this type of box many times. This function should work for
+## any set of labels. This function is later called by the
+## boxGrob function.
+tableBox <- function(labels, x=.5, y=.5) {
+   nlabel <- length(labels)
+   tablevp <- viewport(x=x, y=y,
+                       width=max(stringWidth(labels)) +
+                       unit(4, "mm"),
+                       height=unit(nlabel, "lines"))
+   pushViewport(tablevp)
+   grid.roundrect(gp=gpar(fill="white"))
+   grid.text(labels,
+             y=unit(nlabel:1 - .5, "lines"),
+             just="center")
+   popViewport()
+}
+
+## Create the boxGrob function for use in defining
+## the boxes used in the CONSORT-like diagram.
+## boxGrob creates a graphical function that
+## encapsulates how to draw a box, and defines a graphical
+## object that encapsulates information about a box so drawing
+## is easier. In this way we may the arrows draw relative
+## to the boxes, not the page. By making the arrows
+## draw relative to the boxes we don't have to change
+## arrow coordinates, just "box object" coordinates.
+## THIS FUNCTION DOES NOT DRAW ANYTHING.
+boxGrob <- function(labels, x=.5, y=.5) {
+    grob(labels=labels, x=x, y=y, cl="box")
+}
+drawDetails.box <- function(x, ...) {
+    tableBox(x$labels, x$x, x$y)
+}
+xDetails.box <- function(x, theta) {
+    nlines <- length(x$labels)
+    height <- unit(nlines, "lines")
+    width <- unit(4, "mm") + max(stringWidth(x$labels))
+    grobX(roundrectGrob(x=x$x, y=x$y, width=width, height=height),
+          theta)
+}
+yDetails.box <- function(x, theta) {
+    nlines <- length(x$labels)
+    height <- unit(nlines, "lines")
+    width <- unit(4, "mm") + max(stringWidth(x$labels))
+    grobY(rectGrob(x=x$x, y=x$y, width=width, height=height),
+          theta)
+}
+
+
+## Define all the graphic objects to be used in the CONSORT-like
+## diagram includeing nam eof the object, text in the boxes and
+## position in an (x, y) coordinate plane
+cohort00   <- boxGrob(c("2 ICDs of 250.xx", "in FY2000", "(n=484,874)"),      x=0.150, y=0.950)
+cohort01   <- boxGrob(c("2 ICDs of 250.xx", "in FY2001", "(n=575,839)"),      x=0.500, y=0.950)
+cohort02   <- boxGrob(c("2 ICDs of 250.xx", "in FY2002", "(n=675,165)"),      x=0.850, y=0.950)
+
+rx         <- boxGrob(c("Prescription", "Eligible", "(n=731,189)"),             x=0.300, y=0.750)
+eligible   <- boxGrob(c("ICD9", "Eligible", "(n=832,000)"),               x=0.600, y=0.750)
+norx     <- boxGrob(c("ICD9 250.xx", "No Rx", "(n=201,255)"),                 x=0.875, y=0.650)
+
+noicd      <- boxGrob(c("Rx Data", "No ICD9 250.xx", "(n=100,714)"),          x=0.305, y=0.610)
+
+rx250     <- boxGrob(c("2 ICD9 250.xx", "Rx Data", "(n=630,745)"),                       x=0.600, y=0.470)
+rx2002     <- boxGrob(c("1 ICD9 250.xx", "Rx in FY2002", "(n=60,493)"),                        x=0.280, y=0.400)
+
+studypop   <- boxGrob(c("Study Population", "(n=690,968)"),                   x=0.600, y=0.330)
+noa1cs     <- boxGrob(c("HbA1c Missing", "or Out of Range", "(n=57,543)"),  x=0.850, y=0.260)
+studypop1  <- boxGrob(c("Study Population 1", "(n=633,425)"),                 x=0.600, y=0.190)
+nodeath    <- boxGrob(c("Missing Death", "Information", "(n=3,862)"),         x=0.860, y=0.120)
+studypop2  <- boxGrob(c("Study Population 2", "(n=629,563)"),                 x=0.600, y=0.050)
+
+## Move to a New Page on a Grid Device
+grid.newpage()
+
+## Draw the Boxes
+grid.draw(cohort00)
+grid.draw(cohort01)
+grid.draw(cohort02)
+
+grid.draw(rx)
+grid.draw(eligible)
+grid.draw(norx)
+
+grid.draw(noicd)
+
+grid.draw(rx250)
+grid.draw(rx2002)
+
+grid.draw(studypop)
+grid.draw(noa1cs)
+grid.draw(studypop1)
+grid.draw(nodeath)
+grid.draw(studypop2)
+
+grid.segments(x0 = unit(0.55, "npc"), y0 = unit(0.8975, "npc"),
+              x1 = unit(0.55, "npc"), y1 = unit(0.8000, "npc"),
+              default.units = "npc", 
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.segments(x0 = unit(0.15, "npc"), y0 = unit(0.8975, "npc"),
+              x1 = unit(0.15, "npc"), y1 = unit(0.8500, "npc"),
+              default.units = "npc", 
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.segments(x0 = unit(0.85, "npc"), y0 = unit(0.8975, "npc"),
+              x1 = unit(0.85, "npc"), y1 = unit(0.85, "npc"),
+              default.units = "npc", 
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.segments(x0 = unit(0.15, "npc"), y0 = unit(0.85, "npc"),
+              x1 = unit(0.55, "npc"), y1 = unit(0.8500, "npc"),
+              default.units = "npc", 
+              arrow=arrow(type="closed", angle=15, length=unit(2, "mm")),
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.segments(x0 = unit(0.85, "npc"), y0 = unit(0.85, "npc"),
+              x1 = unit(0.55, "npc"), y1 = unit(0.85, "npc"),
+              default.units = "npc", 
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+
+
+grid.segments(grobX(eligible, "west"),
+              grobY(eligible, "west"),
+              grobX(rx, "east"),
+              grobY(rx, "east"),
+              arrow=arrow(type="closed", ends="both", angle=15, length=unit(2, "mm")),
+              gp=gpar(fill="black")
+              )
+
+grid.segments(grobX(eligible, "south"),
+              grobY(eligible, "south"),
+              grobX(rx250, "north"),
+              grobY(rx250, "north"),
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              gp=gpar(fill="black")
+              )
+grid.segments(x0 = unit(0.600, "npc"), y0 = unit(0.65, "npc"),
+              x1 = unit(0.790, "npc"), y1 = unit(0.65, "npc"),
+              default.units = "npc", 
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.segments(x0 = unit(0.28, "npc"), y0 = unit(0.56, "npc"),
+              x1 = unit(0.28, "npc"), y1 = unit(0.45, "npc"),
+              default.units = "npc", 
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.segments(x0 = unit(0.28, "npc"), y0 = unit(0.70, "npc"),
+              x1 = unit(0.28, "npc"), y1 = unit(0.66, "npc"),
+              default.units = "npc", 
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.segments(x0 = unit(0.38, "npc"), y0 = unit(0.40, "npc"),
+              x1 = unit(0.60, "npc"), y1 = unit(0.40, "npc"),
+              default.units = "npc", 
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
+grid.curve(grobX(studypop, "south"),
+           grobY(studypop, "west") - unit(1.5, "lines"),
+           grobX(noa1cs, "west"),
+           grobY(noa1cs, "north") - unit(1.5, "lines"),
+           arrow=arrow(type="closed", angle=15, length=unit(2, "mm")),
+           gp=gpar(fill="black")
+           )
+
+grid.curve(grobX(studypop1, "south"),
+           grobY(studypop1, "west") - unit(1.5, "lines"),
+           grobX(nodeath, "west"),
+           grobY(nodeath, "north") - unit(1.5, "lines"),
+           arrow=arrow(type="closed", angle=15, length=unit(2, "mm")),
+           gp=gpar(fill="black")
+           )
+
+
+
+
+
+
+
+
+
+
+
+grid.segments(grobX(rx250, "south"),
+              grobY(rx250, "south"),
+              grobX(studypop, "north"),
+              grobY(studypop, "north"),
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              gp=gpar(fill="black")
+             )
+
+grid.segments(grobX(studypop, "south"),
+              grobY(studypop, "south"),
+              grobX(studypop1, "north"),
+              grobY(studypop1, "north"),
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              gp=gpar(fill="black")
+              )
+
+grid.segments(grobX(studypop1, "south"),
+              grobY(studypop1, "south"),
+              grobX(studypop2, "north"),
+              grobY(studypop2, "north"),
+              arrow=arrow(type="closed", ends="last", angle=15, length=unit(2, "mm")),
+              gp=gpar(fill="black")
+              )
+

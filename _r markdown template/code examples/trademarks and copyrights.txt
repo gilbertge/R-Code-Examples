@@ -1,0 +1,3 @@
+© - &copy;
+® - &reg;
+™ - &trade; (or <sup>TM</sup> if you're hacky)

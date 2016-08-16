@@ -1,0 +1,19 @@
+## User-written function for fever
+## Reference: https://www.nlm.nih.gov/medlineplus/ency/article/001982.htm 
+##            Sajadi MM, Mackowiak PA. Temperature regulation and the pathogenesis of fever. In: Bennett JE, Dolin R, Blaser MJ, eds. Mandell, Douglas, and Bennett's Principles and Practice of Infectious Diseases. 8th ed. Philadelphia, PA: Elsevier Saunders; 2015:chap 55.
+##            Sullivan JE, Farrar HC, Section on Clinical Pharmacology and Therapeutics, Committee on Drugs. Fever and antipyretic use in children. Pediatrics. 2011;127:580-587.
+##
+## Usage: df$fever <- has.fever(df$temp)
+##        df$fever <- ifelse(is.na(temp), NA, df$fever)
+##
+## Fahrenheit
+has.feverF <- function(temp) {
+                         fever <- ifelse(temp>99, 1, 0)
+                         return(fever)
+                        }
+
+## Celcius
+has.feverC  <- function(temp) {
+                         fever <- ifelse(temp>37.2, 1, 0)
+                         return(fever)
+                        }

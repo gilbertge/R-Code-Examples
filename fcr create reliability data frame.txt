@@ -1,0 +1,74 @@
+
+library("xlsx")
+mydata <- read.xlsx("c:/myexcel.xlsx", 1)
+
+## Set the working directory
+setwd("/Users/gregoryegilbert/Documents/projects/leighton/fcr")
+
+# read in the third worksheet from the workbook myexcel.xlsx
+# first row contains variable names
+raw <- read.xlsx("fcr reliability data.xlsx", 3)
+
+drop <- names(raw) %in% c("NA."   , "NA..1" , "NA..2" , "NA..3" , "NA..4" , "NA..5" , "NA..6" , "NA..7" , "NA..8" , "NA..9" , "NA..10", "NA..11", "NA..12", "NA..13", "NA..14", "NA..15")
+df <- raw[!drop]
+
+CUWR01  <- subset(df, data_entry_code_rater=="CUWR01") 
+DSFAC01 <- subset(df, data_entry_code_rater=="DSFAC01") 
+DSR01   <- subset(df, data_entry_code_rater=="DSR01") 
+ECUR01  <- subset(df, data_entry_code_rater=="ECUR01") 
+KSR02   <- subset(df, data_entry_code_rater=="KSR02") 
+KSR03   <- subset(df, data_entry_code_rater=="KSR03") 
+OHSUR01 <- subset(df, data_entry_code_rater=="OHSUR01") 
+OHSUR02 <- subset(df, data_entry_code_rater=="OHSUR02") 
+SLR01   <- subset(df, data_entry_code_rater=="SLR01") 
+
+## Reshape multiple rows to a single row with several columns
+drop1       <- names(CUWR01) %in% c("data_entry_code_rater")
+cuwr01      <- CUWR01[!drop1]
+vec1        <- c(t(cuwr01))
+names(vec1) <- c(outer(colnames(cuwr01), rownames(cuwr01), paste, sep="."))
+
+dsfac01     <- DSFAC01[!drop1]
+vec2        <- c(t(dsfac01))
+names(vec2) <- c(outer(colnames(dsfac01), rownames(cuwr01), paste, sep="."))
+
+dsr01       <- DSR01[!drop1]
+vec3        <- c(t(dsr01))
+names(vec3) <- c(outer(colnames(dsr01), rownames(dsr01), paste, sep="."))
+
+ecur01      <- ECUR01[!drop1]
+vec4        <- c(t(ecur01))
+names(vec4) <- c(outer(colnames(ecur01), rownames(ecur01), paste, sep="."))
+
+ksr02       <- KSR02[!drop1]
+vec5        <- c(t(ksr02))
+names(vec5) <- c(outer(colnames(ksr02), rownames(ksr02), paste, sep="."))
+
+ksr03       <- KSR02[!drop1]
+vec6        <- c(t(ksr03))
+names(vec6) <- c(outer(colnames(ksr03), rownames(ksr03), paste, sep="."))
+
+ohsur01     <- OHSUR01[!drop1]
+vec7        <- c(t(ohsur01))
+names(vec7) <- c(outer(colnames(ohsur01), rownames(ohsur01), paste, sep="."))
+
+ohsur02     <- OHSUR02[!drop1]
+vec8        <- c(t(ohsur02))
+names(vec8) <- c(outer(colnames(ohsur02), rownames(ohsur02), paste, sep="."))
+
+slr01 <- SLR01[!drop1]
+vec9 <- c(t(slr01))
+names(vec9) <- c(outer(colnames(slr01), rownames(slr01), paste, sep="."))
+
+## Write Microsoft Excel spreadsheet
+write.xlsx(vec1, "temp1.xlsx")
+write.xlsx(vec2, "temp2.xlsx")
+write.xlsx(vec3, "temp3.xlsx")
+write.xlsx(vec4, "temp4.xlsx")
+write.xlsx(vec5, "temp5.xlsx")
+write.xlsx(vec6, "temp6.xlsx")
+write.xlsx(vec7, "temp7.xlsx")
+write.xlsx(vec8, "temp8.xlsx")
+write.xlsx(vec9, "temp9.xlsx")
+
+

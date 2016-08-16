@@ -1,0 +1,14 @@
+## Michael Friendly analyzed the data in: Corrgrams: Exploratory Displays for Correlation Matrices,
+## The American Statistician, Nov 2002, Vol 56.
+## Load package to contruct corrgram
+library("corrgram")
+
+## Construct corrgram for data
+jpeg("correlogram.jpg", quality = 300)
+   corrgram(corr, 
+            order="PCA", 
+            lower.panel=panel.shade, 
+            upper.panel=panel.pie, 
+            text.panel=panel.txt
+           )
+dev.off()

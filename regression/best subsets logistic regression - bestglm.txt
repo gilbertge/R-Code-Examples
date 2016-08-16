@@ -1,0 +1,70 @@
+## Install package for best subsets regression                                            
+library(bestglm)                                                                          
+
+## Use bestglm package to do best subsets regression                                   
+## http://rstudio-pubs-static.s3.amazonaws.com/2897_9220b21cfc0c43a396ff9abf122bb351.html
+                                                                                       
+## Identify the predictors as a matrix identifying them by column number               
+X <- df[,c(3:4, 6:8, 11:12, 15, 18, 20:23, 25)]                                        
+                                                                                       
+## Identify the predictor as a vector identifying by column number                     
+consult.outcome <-df[,26]                                                              
+                                                                                       
+## Create a dataframe of the predictors and dependent variable.                        
+##    The predictor must be in the final column                                        
+Xy <- as.data.frame(cbind(X,consult.outcome))                                          
+                                                                                       
+## Create a data set with only complete observations                                   
+Xy.complete       <- na.omit(Xy)                                                       
+                                                                                       
+## Create a vector to contain the number of variables in the models                    
+##    identified by best subsets regression                                            
+names(Xy)<-c(paste("X",1:14,sep=""),"consult.outcome")                                 
+                                                                                       
+## Perform best subsets regression using AIC criteria                                  
+##    to select the best model                                                         
+bestglmAIC  <- bestglm(Xy.complete,                                                    
+                       family=binomial,                                                
+                       IC="AIC"                                                        
+                      )                                                                
+                                                                                       
+## Perform best subsets regression using BIC criteria                                  
+##    to select the best model                                                         
+bestglmBIC  <- bestglm(Xy.complete,                                                    
+                       family=binomial,                                                
+                       IC="BIC"                                                        
+                      )                                                                
+## Perform best subsets regression using BICg criteria                                 
+##    to select the best model                                                         
+bestglmEBIC <- bestglm(Xy.complete,                                                    
+                       family=binomial,                                                
+                       IC="BICg"                                                       
+                      )                                                                
+                                                                                       
+## Perform best subsets regression using BICq criteria                                 
+##    to select the best model                                                         
+bestglmBICq <- bestglm(Xy.complete,                                                    
+                       family=binomial,                                                
+                       IC="BICq"                                                       
+                      )                                                                
+                                                                                       
+## Calculate the number of variables in each model                                     
+NAIC  <- length(coef(bestglmAIC$BestModel))-1                                          
+NBIC  <- length(coef(bestglmBIC$BestModel))-1                                          
+NEBIC <- length(coef(bestglmEBIC$BestModel))-1                                         
+NBICq <- length(coef(bestglmBICq$BestModel))-1                                         
+                                                                                       
+## Create a vector with the number of variables in each "best subset" model            
+ans<-c(NAIC, NBIC, NEBIC, NBICq)                                                       
+                                                                                       
+## Label the columns with the criteria used for selection                              
+names(ans)<-c("AIC", "BIC", "BICg", "BICq")                                            
+                                                                                       
+## Print the number of variables in each model                                         
+ans                                                                                    
+                                                                                       
+## Print the summaries of each model                                                   
+summary(bestglmAIC$BestModel)                                                          
+summary(bestglmBIC$BestModel)                                                          
+summary(bestglmEBIC$BestModel)                                                         
+summary(bestglmBICq$BestModel)                                                         

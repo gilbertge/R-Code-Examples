@@ -1,0 +1,2 @@
+## P value for LMM LRT testing of a parameter or parameters.
+(_P_ value=```r round(as.matrix(anova(MODEL1, MODEL2))[[2,8]], digits=4)```)

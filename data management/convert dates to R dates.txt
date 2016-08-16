@@ -1,0 +1,4 @@
+## Convert dates to R dates
+raw$matriculation.date <- as.Date(strptime(raw$matriculation.date, "%m/%d/%Y"))
+raw$dob                <- as.Date(strptime(raw$dob, "%m/%d/%Y"))
+

@@ -1,0 +1,2 @@
+## Subset the data frame to the population of interest - those with lactic acidosis       
+df <- subset(raw, lactic.acidosis == 1)                                                   

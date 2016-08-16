@@ -1,0 +1,2 @@
+## Delete Renal/GU and Neuro patients due to sparse data                                  
+df <-df[!(df$admission==4 | df$admission==8),]                                            

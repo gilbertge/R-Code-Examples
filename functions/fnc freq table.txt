@@ -1,0 +1,18 @@
+## User-written function for frequency distributions
+freq.table.missing <- function(var, vname=deparse(substitute(var))) {
+                             print(vname)
+                             cbind(Freq      =table(var, useNA="always"), 
+                                   CumFreq   =cumsum(table(var, useNA="always")), 
+                                   RelFreq   =round(prop.table(table(var, useNA="always")), digits=2),
+                                   CumRelFreq=round(cumsum(prop.table(table(var, useNA="always"))), digits=2)
+                                   )
+                            }
+
+freq.table <- function(var, vname=deparse(substitute(var))) {
+                             print(vname)
+                             cbind(Freq      =table(var), 
+                                   CumFreq   =cumsum(table(var)), 
+                                   RelFreq   =round(prop.table(table(var)), digits=2),
+                                   CumRelFreq=round(cumsum(prop.table(table(var))), digits=2)
+                                   )
+                            }

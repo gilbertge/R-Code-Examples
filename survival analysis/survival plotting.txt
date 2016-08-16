@@ -1,0 +1,59 @@
+library(RODBC)
+chan <- odbcConnectExcel("E:/Mu JM R/unadjusted surv curv 4 year2deth.xls")
+chp1<- sqlFetch(chan, "SURV_UNADJUST") 
+close(chan) 
+names(chp1)
+library(survival)
+par(font.lab=14)
+par(font=8)
+par(family="serif") 
+
+
+fitSlope<-survfit(Surv(year2death, censor)~PosRate, data=chp1)
+
+plot(survfit(Surv(year2death, censor)~PosRate, data=chp1),lty=c(1,2), lwd=2, ylab="Survival probablity",
+xlab="Time to death in years", ylim=c(0.5,1))
+
+legend(1, 0.58,lty=c(1,2), bty="n", legend=c("Rate of change in HgbA1c<=0.05", "Rate of change in HgbA1c>0.05"))
+
+
+
+plot(survfit(Surv(year2death, censor)~BHgbA1c, data=chp1),lty=c(1,2), lwd=2, ylab="Survival probablity",
+xlab="Time to death in years", ylim=c(0.5,1))
+
+legend(1, 0.58,lty=c(1,2), bty="n", legend=c("Baseline HgbA1c<=7", "Baseline HgbA1c>7"))
+
+
+black<-subset(chp1, NHBLACK==1)
+white<-subset(chp1, NHBLACK==0)
+
+plot(survfit(Surv(year2death, censor)~PosRate, data=black),lty=c(1,2), lwd=2, ylab="Survival probablity",
+xlab="Time to death in years", ylim=c(0.5,1))
+
+par(new=T)
+
+plot(survfit(Surv(year2death, censor)~PosRate, data=white),lty=c(1,2), lwd=1, ylab="Survival probablity",
+xlab="Time to death in years", ylim=c(0.5,1))
+
+legend(1, 0.61, lty=c(1,2,1,2),lwd=c(2,2,1,1), bty="n", legend=c("Black: rate of change in HgbA1c<=0.05", "Black: rate of change in HgbA1c>0.05", "White: rate of change in HgbA1c<=0.05", "White: rate of change in HgbA1c>0.05"))
+
+
+
+
+plot(survfit(Surv(year2death, censor)~BHgbA1c, data=black),lty=c(1,2), lwd=2, ylab="Survival probablity",
+xlab="Time to death in years", ylim=c(0.5,1))
+
+par(new=T)
+
+plot(survfit(Surv(year2death, censor)~BHgbA1c, data=white),lty=c(1,2), lwd=1, ylab="Survival probablity",
+xlab="Time to death in years", ylim=c(0.5,1))
+
+legend(1, 0.61, lty=c(1,2,1,2),lwd=c(2,2,1,1), bty="n", legend=c("Black: Baseline HgbA1c<=7", "Black: Baseline HgbA1c>7", "White: Baseline HgbA1c<=7", "White: Baseline HgbA1c>7"))
+
+
+
+
+plot(survfit(Surv(year2death, censor)~NHBLACK, data=chp1),lty=c(1,2), lwd=2, ylab="Survival probablity",
+xlab="Time to death in years", ylim=c(0.5,1))
+
+legend(1, 0.58,lty=c(1,2), bty="n", legend=c("Non-Hispanic White", "Non-Hispanic Black"))

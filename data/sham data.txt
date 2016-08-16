@@ -1,0 +1,146 @@
+## Website for Random Number Genderation
+## http://astrostatistics.psu.edu/datasets/R/Random.html
+
+## Load the package used for exporting SAS data
+library("SASxport")
+
+## Set the seed so dta can be reproduced
+set.seed(10231995)
+
+## Define how many observations should be generated
+n=5000
+
+## This function categorizes age in a fairly flexible way.
+## The first assignment to labs inside the function creates 
+## a vector of labels. Then, the cut function is called to 
+## do the work, with the custom labels as an argument.
+age.cat <- function(x, lower = 0, upper, by = 10,
+                   sep = "-", above.char = "+") {
+
+ labs <- c(paste(seq(lower, upper - by, by = by),
+                 seq(lower + by - 1, upper - 1, by = by),
+                 sep = sep),
+           paste(upper, above.char, sep = ""))
+
+ cut(floor(x), breaks = c(seq(lower, upper, by = by), Inf),
+     right = FALSE, labels = labs)
+}
+
+## Set the working directory                                            
+setwd("/Users/gregoryegilbert/Documents/r/code examples/data")               
+
+## Create the ID variable
+id<-seq(from=1, to=n, by=1)
+
+## Create GENDER variable
+female <- ifelse(runif(n, min = 0, max = 1) <= .42, 1, 0)
+
+## Create AGE variable
+age <- round(rnorm(n, mean=65.7699170, sd=11.0894758), digits=0)
+
+## Create AGE GROUP variable
+## Only specifying an upper bound, uses 0 as lower bound, and
+## breaks up categories by 10
+age.group <- (age.cat(age, upper=100))
+
+## Create random variable RACE variable
+randrace <- runif(n, min = 0, max = 1)
+nhw   <- ifelse(randrace >=   0 & randrace <=  .73, 1, 0)
+nhb   <- ifelse(randrace >  .73 & randrace <=  .86, 1, 0)
+asian <- ifelse(randrace >= .86 & randrace <=  .91, 1, 0)
+other <- ifelse(randrace >= .91 & randrace <= 1.00, 1, 0)
+race  <- ifelse(nhw==1, 1, ifelse(nhb==1, 2, ifelse(asian==1, 3, 4)))
+
+## Create random variable ETHNICITY (HISPANIC) variable
+hispanic <- ifelse(runif(n, min = 0, max = 1) <= .37, 1, 0)
+
+## Create HEIGHT variable in inches
+height <- round(rnorm(n, mean=69.7, sd=2.8), digits=0)
+weight <- round(rnorm(n, mean=196.4, sd=48.2), digits=0)
+bmi    <- (weight/(height*height))*703
+
+## Create SMOKING variable
+smokes <- ifelse(runif(n, min = 0, max = 1) <= .178, 1, 0)
+
+## Create the random MARITAL STATUS variable
+randmstatus <- runif(n, min = 0, max = 1)
+marital.status <-  ifelse(randmstatus >=   0 & randmstatus <=  .17, 1, ifelse(randmstatus >=   .17 & randmstatus <=  .26, 2, ifelse(randmstatus >=   .26 & randmstatus <=  .34, 3, ifelse(randmstatus >=   .34 & randmstatus <=  .36, 4, 5))))
+
+## Create the random EMPLOYMENT variable
+randemploy <- runif(n, min = 0, max = 1)
+employment <-  ifelse(randemploy >=   0 & randemploy <=  .17, 1, ifelse(randemploy >=   .17 &randemploy <=  .26, 2, ifelse(randemploy >=   .26 & randemploy <=  .34, 3, ifelse(randemploy >=   .34 & randemploy <=  .36, 4, 5))))
+
+## Create STATE data
+state <- round(50*rbeta(n, 1, 2, ncp = 0)+1, digits=0)
+
+## Create comorbidity data
+anemdef      <- ifelse( runif(n, min=0, max=1) <= .08  , 1, 0)
+asthma       <- ifelse( runif(n, min=0, max=1) <= .15  , 1, 0)
+bipolar      <- ifelse( runif(n, min=0, max=1) <= .04  , 1, 0)
+cancer       <- ifelse( runif(n, min=0, max=1) <= .09  , 1, 0)
+cbd          <- ifelse( runif(n, min=0, max=1) <= .09  , 1, 0)
+chf          <- ifelse( runif(n, min=0, max=1) <= .12  , 1, 0)
+chrnlung     <- ifelse( runif(n, min=0, max=1) <= .14  , 1, 0)
+copd         <- ifelse( runif(n, min=0, max=1) <= .10  , 1, 0)
+depress      <- ifelse( runif(n, min=0, max=1) <= .13  , 1, 0)
+diabetes     <- ifelse( runif(n, min=0, max=1) <= .72  , 1, 0)
+epilepsy     <- ifelse( runif(n, min=0, max=1) <= .03  , 1, 0)
+gad          <- ifelse( runif(n, min=0, max=1) <= .05  , 1, 0)
+htn_c        <- ifelse( runif(n, min=0, max=1) <= .14  , 1, 0)
+hypothy      <- ifelse( runif(n, min=0, max=1) <= .13  , 1, 0)
+perivasc     <- ifelse( runif(n, min=0, max=1) <= .09  , 1, 0)
+psych        <- ifelse( runif(n, min=0, max=1) <= .12  , 1, 0)
+ptsd         <- ifelse( runif(n, min=0, max=1) <= .11  , 1, 0)
+pulmcirc     <- ifelse( runif(n, min=0, max=1) <= .14  , 1, 0)
+stroke       <- ifelse( runif(n, min=0, max=1) <= .13  , 1, 0)
+substanceuse <- ifelse( runif(n, min=0, max=1) <= .18  , 1, 0)
+tbi          <- ifelse( runif(n, min=0, max=1) <= .18  , 1, 0)
+tumor        <- ifelse( runif(n, min=0, max=1) <= .13  , 1, 0)
+                                               
+## Create BP data
+sbp <- round(rnorm(n, mean=110, sd=16)+40, digits=0)
+dbp <- round(rnorm(n, mean= 70, sd=12)+25, digits=0)
+map <- (2*dbp+sbp)/3
+
+
+## Combine the data
+demographics <- cbind.data.frame(id,             female,     age,   age.group, race,    hispanic,
+                           height,         weight,     bmi,   smokes,
+                           marital.status, employment, state, anemdef,   asthma,  bipolar, 
+                           cancer,         cbd,        chf,   chrnlung,  copd,    depress,      
+                           diabetes,       epilepsy,   gad,   htn_c,     hypothy,         
+                           perivasc,       psych,      ptsd,  pulmcirc,  stroke,  substanceuse, 
+                           tbi,            tumor,      sbp,   dbp,       map
+                          )
+
+## Create longitudinal HbA1c data
+time    <- 1
+hba1c   <- round(rchisq(n, 2)+5, digits=1)
+hba1c.1 <- cbind.data.frame(id, demographics, time, hba1c)
+
+time    <- 2
+hba1c   <- round(rf(n, 3, 7)+5, digits=1)
+hba1c.2 <- cbind.data.frame(id, demographics, time, hba1c)
+
+time    <- 3
+hba1c   <- round(rf(n, 7, 10)+5, digits=1)
+hba1c.3 <- cbind.data.frame(id, demographics, time, hba1c)
+
+time    <- 4
+hba1c   <- round(rf(n, 4, 17)+5, digits=1)
+hba1c.4 <-cbind.data.frame(id, demographics, time, hba1c)
+
+time    <- 5
+hba1c   <- round(rf(n, 7, 14)+5, digits=1)
+hba1c.5 <- cbind.data.frame(id, demographics, time, hba1c)
+
+sham_data <- rbind.data.frame(hba1c.1, hba1c.2, hba1c.3, hba1c.4, hba1c.5)
+
+## Write the data to a CSV file
+write.csv(sham_data, file = "sham data.csv")
+
+## Create a SAS XPORT file
+write.xport(sham_data, file="sham data.xpt")
+
+## Save ama object for faster access
+saveRDS(sham_data, "sham_data.rds")

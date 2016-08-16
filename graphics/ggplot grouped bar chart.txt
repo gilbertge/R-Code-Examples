@@ -1,0 +1,28 @@
+## Load package for recoding
+library(car)
+
+## Load package for groupd bar plotting
+library(ggplot2)
+
+## Recode Time so more "legible"
+df$Role <- recode(df$Role,  "1='Student'; 2='Facilitator'; 3='Innovator'")
+
+## Re-order the levels in the preferred order of appearance
+df$Role <- factor(df$Role, c("Student", "Facilitator", "Innovator"))
+
+## Start a new plot frame
+plot.new()
+
+## Write out plot
+tiff("question2.tiff")
+
+## df          = data frame
+## Participant = x-axis (abscissa)
+## q2          = y-axis (ordinate)
+## Role        =grouping variable
+ggplot(df, aes(factor(Participant), q2, fill=Role)) + 
+  geom_bar(stat="identity", position = "dodge") + 
+  scale_fill_brewer(palette = "Set1") +
+  xlab("Participant") +
+  ylab("Was PBL/SGL a good format to learn medicine?")
+dev.off()

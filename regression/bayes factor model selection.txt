@@ -1,0 +1,33 @@
+## Load the package for calculation of Bayes Factors and
+## Bayes Regression model selection
+library(BayesFactor)
+
+## Do model selection using Bayes factors
+sink("model selection.txt")
+result <- generalTestBF(final.passage ~ traditional_group + age + female + asian_pi + unk + native_hi_pi + black + hispanic +ugpa + merp + mcat_bs  + mcat_ps + mcat_vb, 
+                        data=selection,
+                        neverExclude="traditional_group", 
+                        progress=FALSE
+                       )
+result
+sink()
+
+#########################################################
+##                                                     ##
+## Edit the the ""model selection.txt" file, place     ##
+## commas after the model and after the Bayes factor.  ##
+## Add variable names: model, bayes.factor, and        ##
+## plus.minus. Save the fine as "model selection.csv". ##
+## Delete rows not having pertinent information.       ##
+##                                                     ##
+#########################################################
+
+## Read in data from a CSV file                                         
+bf.models <- read.csv("/Users/gregoryegilbert/Documents/projects/st_hilaire/airway/model selection.csv")
+
+## Sort the Bayes Factor
+sorted.bf <- bf.models[order(bf.models$bayes.factor, decreasing=TRUE),] 
+
+## Output the top six models
+sink("")
+head(sorted.bf)

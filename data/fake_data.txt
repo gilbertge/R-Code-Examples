@@ -1,0 +1,8 @@
+q1 <- sample(1:100,10, replace=T)
+q2 <- rep(c(NA,5), 5)
+q3 <- rnorm(10)
+residual <- data.frame(cbind(q1,q2,q3))
+residual
+
+residual <- subset(residual, residual$q2 != "NA")
+residual

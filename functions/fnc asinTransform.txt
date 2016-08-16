@@ -1,0 +1,9 @@
+## The arcsine transformation  (also called the arcsine square root transformation, 
+## or the angular transformation) is used for percentage data. In some cases, the 
+## result is not multiplied by two (Sokal and Rohlf 1995). Multiplying by two makes
+## the arcsine scale go from zero to pi; not multiplying by two makes the scale stop 
+## at pi/2.  The choice is arbitrary.
+##
+## Reference: Sokal, R.R., and F.J. Rohlf. 1995. Biometry. Freeman, New York, p.887.
+## 
+asinTransform <- function(p) { asin(sqrt(p)) }

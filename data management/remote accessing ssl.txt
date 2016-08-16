@@ -1,0 +1,12 @@
+# install and load rio
+library("devtools")
+install_github("leeper/rio")
+library("rio")
+
+# import
+import("https://gist.github.com/raw/667867/c47ec2d72801cfd84c6320e1fe37055ffe600c87/test.csv")
+##   a b
+## 1 1 2
+## 2 2 3
+## 3 3 4
+## 4 4 5

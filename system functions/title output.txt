@@ -1,0 +1,6 @@
+## Title the output for easier interpretability
+writeLines("*******************************************************\n*                                                     *\n*   Descriptive Statistics for Continuous Variables   *\n*                                                     *\n*******************************************************")
+
+                                                    
+## Add spaces between output for easier interpretability  
+writeLines("\n\n\n")                                                            

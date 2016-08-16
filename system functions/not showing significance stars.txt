@@ -1,0 +1,4 @@
+options(show.signif.stars=FALSE)
+
+x <- as.matrix(anova(lm(hp~mpg+am, data=mtcars)))
+print(x, na.print="", quote=FALSE)

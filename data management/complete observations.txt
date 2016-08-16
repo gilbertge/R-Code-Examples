@@ -1,0 +1,2 @@
+## Create a data set with only complete observations
+df.complete       <- na.omit(df)

@@ -1,0 +1,4 @@
+## Read in data, subset to needed observations, and subset further to complete cases
+raw          <- read.csv("/Users/gregoryegilbert/Documents/projects/sebro/ars and noon lectures/longitudinal.csv")
+keep_vars <- c("resident_ID", "pgy", "age", "gender", "race_ethnicity")
+df <- raw[keep_vars]

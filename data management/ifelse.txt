@@ -1,0 +1,2 @@
+## Create the "intervention" variable                                                     
+raw$lactic.acidosis <- ifelse(raw$lactic.acid.consult >= 5, 1,0)                          

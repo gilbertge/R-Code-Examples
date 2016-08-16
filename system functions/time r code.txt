@@ -1,0 +1,10 @@
+## Time the execution of the procedure. Start the clock.                               
+ptm <- proc.time()                                                                     
+
+r code here
+
+## Stop the clock and calculate elapsed time                                           
+##    "user time" relates to the execution of the code,                                
+##    "system time" relates to your CPU, and                                           
+##    "elapsed time is the difference in times since you started the stopwatch         
+proc.time() - ptm                                                                      

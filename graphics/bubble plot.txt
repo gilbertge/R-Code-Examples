@@ -1,0 +1,49 @@
+library(grid)
+par.origin <-  par("mar")
+
+par(mai=c(.25,.25,.25,.25))
+
+plot.new()
+text(.75, 1.0, "Sources of Variation")
+
+## Participant Variance 30%
+grid.circle(x=.17, y=.78, r=0.15, gp=gpar(fill="yellow"))
+grid.rect(x=.60, y=.78, width=.025, height=.04, gp=gpar(fill="yellow"))
+text(.78, .83, cex=1, "Participants (30%)")
+
+## Rater Variance 5%
+grid.circle(x=.23, y=.58, r=0.025, gp=gpar(fill="purple"))
+grid.rect(x=.60, y=.72, width=.025, height=.04, gp=gpar(fill="purple"))
+text(.725, .76, cex=1, "Rater (5%)")
+
+## Item Variance 15%
+grid.circle(x=.38, y=.60, r=0.075, gp=gpar(fill="orange"))
+grid.rect(x=.60, y=.66, width=.025, height=.04, gp=gpar(fill="orange"))
+text(.730, .69, cex=1, "Item (15%)")
+
+## Participant x Rater Variance 25%
+grid.circle(x=.33, y=.19, r=0.125, gp=gpar(fill="red"))
+grid.rect(x=.60, y=.60, width=.025, height=.04, gp=gpar(fill="red"))
+text(.735, .62, cex=1, "P x R (25%)")
+
+## Participant x Item Variance 10%
+grid.circle(x=.43, y=.35, r=0.05, gp=gpar(fill="magenta"))
+grid.rect(x=.60, y=.54, width=.025, height=.04, gp=gpar(fill="magenta"))
+text(.73, .55, cex=1, "P x I (10%)")
+
+## Rater x Item Variance 2%
+grid.circle(x=.18, y=.15, r=0.01, gp=gpar(fill="blue"))
+grid.rect(x=.60, y=.48, width=.025, height=.04, gp=gpar(fill="blue"))
+text(.720, .48, cex=1, "R x I (2%)")
+
+## Participant x Rater x Item Variance 13%
+grid.circle(x=.22, y=.40, r=0.065, gp=gpar(fill="green"))
+grid.rect(x=.60, y=.42, width=.025, height=.04, gp=gpar(fill="green"))
+text(.760, .40, cex=1, "P x R x I (13%)")
+
+## Create a box around pseudo-bubble plot
+## Coordinates are: (x1, x2) to (y1, y2)
+grid.lines(c(.04,.04), c(.04,.95))
+grid.lines(c(.50,.50), c(.04,.95))
+grid.lines(c(.04,.50), c(.04,.04))
+grid.lines(c(.04,.50), c(.95, .95))

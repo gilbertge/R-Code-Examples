@@ -1,0 +1,10 @@
+## Load package to create LaTeX tables
+library("xtable")
+
+## Reference: http://www.statmethods.net/advgraphs/correlograms.html
+pearson.corr <- round(cor(corr, use="complete.obs"), digits=2)
+
+sink("correlation matrix.txt")
+## Create LaTeX table for inclusion as checklist
+print(xtable(pearson.corr, type="latex", digits=2, caption="Pearson Product-moment correlations of grit, semester cumulative, and final scores, and comprehensive exam score"), include.rownames=FALSE, caption.placement="top")
+sink()

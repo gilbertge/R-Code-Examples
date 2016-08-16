@@ -1,0 +1,7 @@
+## Load package for recoding
+library(car)
+
+## Recode variables
+df$Gender                   <- recode(df$q3,  "1='Female'; 2='Male'")
+df$Race                     <- recode(df$q4,  "1='Asian'; 2='Black'; 3='White'; 4='Some Other Race'; 5='Two or More Races'; 6='Refused'")
+df$Ethnicity                <- recode(df$q5,  "1='Hispanic or Latino'; 2='Non-Hispanic or Non-Latino'")

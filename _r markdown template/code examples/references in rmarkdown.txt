@@ -1,0 +1,12 @@
+## Normal citation
+[@BibTeX reference Key]
+
+
+## Reference like "Gilbert (2016) says blah blah...
+## A minus sign (-) before the @ will suppress mention of the author in the citation. 
+## This can be useful when the author is already mentioned in the text
+Gilbert says blah [-@Gilbert2016]
+
+## or
+
+@Gilbert2016 says blah blah...

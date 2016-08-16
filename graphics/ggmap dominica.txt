@@ -1,0 +1,39 @@
+## http://www.r-bloggers.com/maps-in-r-plotting-data-points-on-a-map/
+
+## Set the Working Directory
+setwd("/Users/gregoryegilbert/Documents/projects/dennis")
+
+## Install ggmap - A package for spatial visualization with Google Maps 
+## and OpenStreetMap. ggmap allows for the easy visualization of spatial 
+## data and models on top of Google Maps, OpenStreetMaps, Stamen Maps,or 
+## CloudMade Maps using ggplot2.
+install.packages("ggmap", dependencies=TRUE)
+
+## Update any installed packages
+update.packages(checkBuilt=TRUE, ask=FALSE)
+
+## Load the ggmap package
+library(ggmap)
+
+## get_map is a smart function which queries the Google Maps, OpenStreetMap, 
+## or Stamen Maps server for a map at a certain location at a certain spatial 
+## zoom. it is a wrapper for get_googlemap, get_openstreetmap, get_stamenmap, 
+## and get_cloudmademap functions. Get the map of Europe  and zoom at a level
+## of 4. Zoom is an integer from 3 (continent) to 21 (building), default 
+## value 10 (city). openstreetmaps limits a zoom of 18
+## St. Kitts:  17.348311, -62.776174
+map <- get_map(location=c(lon=-62.7, lat=17.25), maptype="satellite", zoom = 11)
+
+## ggmap plots the raster object produced by get_map
+## geom_points plots points as in a scatter plot it is a part of the ggplot2 
+## package. From the airportD data frame points are plotted at the lat/lons
+## with the sizes being proportional t the square root of the number of flights
+## with a transparency of .5 (alpha=.5)
+mapPoints <- ggmap(map)
+
+mapPointsLegend <- mapPoints + scale_size_area(breaks = sqrt(c(1, 5, 10, 50, 100, 500)), 
+                               labels = c(1, 5, 10, 50, 100, 500), name = "Departing routes")
+                               
+## jpeg("st kitts.jpeg")
+mapPoints
+## dev.list()

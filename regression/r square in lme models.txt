@@ -1,0 +1,71 @@
+## Reference: http://stats.stackexchange.com/questions/95054/how-to-get-the-overall-effect-for-linear-mixed-model-in-lme4-in-r
+
+## One of the suggested methods looks at the correlation between the fitted 
+## and the observed values. This can be implemented in R as suggested by 
+## Jarrett Byrnes in one of those threads:
+
+r2.corr.mer <- function(m) {
+  lmfit <-  lm(model.response(model.frame(m)) ~ fitted(m))
+  summary(lmfit)$r.squared
+}
+
+So for example, say we estimate the following linear mixed model:
+
+set.seed(1)
+d <- data.frame(y = rnorm(250), x = rnorm(250), z = rnorm(250),
+                g = sample(letters[1:4], 250, replace=T)       )
+library(lme4)
+summary(fm1 <- lmer(y ~ x + (z | g), data=d))
+# Linear mixed model fit by REML ['lmerMod']
+# Formula: y ~ x + (z | g)
+#    Data: d
+# REML criterion at convergence: 744.4
+# 
+# Scaled residuals: 
+#     Min      1Q  Median      3Q     Max 
+# -2.7808 -0.6123 -0.0244  0.6330  3.5374 
+# 
+# Random effects:
+#  Groups   Name        Variance Std.Dev. Corr 
+#  g        (Intercept) 0.006218 0.07885       
+#           z           0.001318 0.03631  -1.00
+#  Residual             1.121439 1.05898       
+# Number of obs: 250, groups: g, 4
+# 
+# Fixed effects:
+#             Estimate Std. Error t value
+# (Intercept)  0.02180    0.07795   0.280
+# x            0.04446    0.06980   0.637
+# 
+# Correlation of Fixed Effects:
+#   (Intr)
+# x -0.005
+
+We can calculate the effect size using the function defined above:
+
+r2.corr.mer(fm1)
+# [1] 0.0160841
+
+A similar alternative is recommended in a paper by Ronghui Xu (http://onlinelibrary.wiley.com/doi/10.1002/sim.1572/abstract), referred to as Omega-squared naught and can be calculated in R simply:
+
+1-var(residuals(fm1))/(var(model.response(model.frame(fm1))))
+# [1] 0.01173721  # Usually, it would be even closer to the value above
+
+
+
+
+
+
+Reference
+
+Xu, R. (2003). Measuring explained variation in linear mixed effects models. Statistics in Medicine, 22, 3527-3541. DOI:10.1002/sim.1572
+
+Edwards, L. J., Muller, K. E., Wolfinger, R. D., Qaqish, B. F., & Schabenberger, O. (2008). An R2
+R
+2
+statistic for fixed effects in the linear mixed model. Statistics in Medicine, 27, 6137-6157. DOI:10.1002/sim.3429
+
+Hössjer, O. (2008). On the coefficient of determination for mixed regression models. Journal of Statistical Planning and Inference, 138, 3022-3038. DOI:10.1016/j.jspi.2007.11.010
+
+https://stat.ethz.ch/pipermail/r-sig-mixed-models/2010q1/003363.html
+

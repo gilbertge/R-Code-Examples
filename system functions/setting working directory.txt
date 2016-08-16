@@ -1,0 +1,2 @@
+## Set the working directory
+setwd("/Users/gregoryegilbert/Documents/projects/sebro/ars and noon lectures")

@@ -1,0 +1,21 @@
+## Do univariate regression
+##    Reference: http://www.statmethods.net/stats/anova.html
+aov.mfd <- aov(mfd ~ factor(group), data=df)
+summary(aov.mfd)
+
+## Evaluate Model Effects
+## R provides Type I sequential SS, not the default Type III marginal SS reported 
+##    by SAS and SPSS. In a nonorthogonal design with more than one term on the 
+##    right hand side of the equation order will matter (i.e., A+B and B+A will 
+##    produce different results)! We will need use the drop1( ) function to produce 
+##    the familiar Type III results. It will compare each term with the full model. 
+##    Alternatively, we can use anova(fit.model1, fit.model2) to compare nested 
+##    models directly.
+drop1(aov.mfd,~.,test="F") # type III SS and F Tests
+
+## Multiple Comparisons
+## You can get Tukey HSD tests using the function below. By default, it calculates 
+##    post hoc comparisons on each factor in the model. You can specify specific 
+##    factors as an option. Again, remember that results are based on Type I SS!
+## Tukey Honestly Significant Differences
+TukeyHSD(aov.mfd)

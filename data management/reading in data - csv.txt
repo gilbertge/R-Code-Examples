@@ -1,0 +1,2 @@
+## Read in data from a CSV file
+df          <- read.csv("/Users/gregoryegilbert/Documents/projects/sebro/ars and noon lectures/longitudinal.csv")

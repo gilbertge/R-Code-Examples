@@ -1,0 +1,41 @@
+## Install package for best subsets regression                                            
+library(glmulti)                                                                          
+
+## Use another package for best subsets regression (glmulti) to                        
+##    validate results                                                                 
+##                                                                                     
+## THIS CODE ANALYZES OVER 300,000 MODELS USING ***MAIN EFFECTS*** ONLY                
+##    MAIN EFFECTS ARE SPECIFIED USING THE ***LEVEL=1*** OPTION                        
+##    WITH A LARGE NUMBER OF VARIABLES IF NOT LIMITED TO MAIN EFFECTS THE              
+##    NUMBER OF MODELS PRODUCED WILL BE TOO NUMEROUS.                                  
+##                                                                                     
+## This model takes about xx minutes to run with 22 variables                          
+                                                                                       
+## Time the execution of the procedure. Start the clock.                               
+ptm <- proc.time()                                                                     
+                                                                                       
+## Using the glmulti package select the best model using the AIC as criteria           
+bestAIC  <- glmulti("consult.outcome",                                                 
+                     c("age", "male", "black", "other", "unknown",                     
+                       "adm.respiratory", "adm.abdominal", "adm.renal.gu", "adm.cardiovascular", 
+                       "consult.broad", "metformin", "nausea.vomiting", "abdominal.pain",                        
+                       "abdominal.pain", "bowel.habits", "peritoneal.signs", "distention",     
+                       "tenderness", "wbc.consult", "gi.bleed", "previous.abd.sx", "previous.vascular.sx"),
+                     level=1,                                                          
+                     crit=aic,      %% Other criteria: aicc and bic                                                   
+                     data=df,                                                          
+                     maxit=30                                                          
+                    )                                                                  
+## Stop the clock and calculate elapsed time                                           
+##    "user time" relates to the execution of the code,                                
+##    "system time" relates to your CPU, and                                           
+##    "elapsed time is the difference in times since you started the stopwatch         
+proc.time() - ptm                                                                      
+                                                                                       
+                                                                                       
+                                                                                       
+                                                                                       
+                                                                                       
+                                                                                       
+## Show result for the best model                                                      
+summary(bestAIC@objects[[1]])                                                          

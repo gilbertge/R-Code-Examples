@@ -1,0 +1,10 @@
+## Load package to produce LaTeX tables
+library("xtable")
+
+## Reference: http://www.statmethods.net/advgraphs/correlograms.html
+r.squared <- round(cor(corr, use="complete.obs")^2, digits=2)
+
+sink("r-squared.txt")
+## Create LaTeX table for inclusion as checklist
+print(xtable(r.squared, type="latex", digits=2, caption="Coefficient of determination for Grit, semester cumulative, and final scores, and comprehensive exam score"), include.rownames=FALSE, caption.placement="top")
+sink()

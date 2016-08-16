@@ -1,0 +1,15 @@
+## Output data to a graphics file.
+## bmp(filename="filename.bmp", width=480, height=480)
+## jpeg(filename="filename.jpg", width=480, height=480, quality=75)
+## png(filename="filename.png", width=480, height=480)
+tiff(filename="filename.tiff", width=480, height=480)
+   corrgram(mini.corr, 
+            order=TRUE, 
+            lower.panel=panel.shade, 
+            upper.panel=panel.pie, 
+            text.panel=panel.txt
+           )
+dev.off()
+
+
+

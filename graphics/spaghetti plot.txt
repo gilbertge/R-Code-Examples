@@ -1,0 +1,15 @@
+## Attach the data frame so data frame name does to need to be used
+## with every  variable name
+attach(df)
+
+## Spaghetti Plot of 
+   interaction.plot(Week,
+                    Student.ID,
+                    Score,
+                    xlab="Week", 
+                    ylab="Score", 
+                    ylim=c(0, 1.1),
+                    col=c(1:10), 
+                    legend=F,
+                    main="Cervical Diameter"
+                   )

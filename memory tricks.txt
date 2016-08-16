@@ -1,0 +1,32 @@
+data.table package
+source()
+After this you can save them with save("Destinationfile",list=ls()) The next time you open R you can use load("Destinationfile")
+fread package
+The ll function in gData package can show the memory usage of each object as well: gdata::ll(unit='MB')
+
+I really appreciate some of the answers above, following @hadley and @Dirk that suggest closing R and issuing source and using command line I come up with a solution that worked very well for me. I had to deal with hundreds of mass spectras, each occupies around 20 Mb of memory so I used two R scripts, as follows:
+#!/usr/bin/Rscript --vanilla --default-packages=utils
+
+for(l in 1:length(fdir)) {
+
+   for(k in 1:length(fds)) {
+     system(paste("Rscript runConsensus.r", l, k))
+   }
+}
+
+
+#Find the objects       
+MemoryObjects = ls()    
+#Create an array
+MemoryAssessmentTable=array(NA,dim=c(length(MemoryObjects),2))
+#Name the columns
+colnames(MemoryAssessmentTable)=c("object","bytes")
+#Define the first column as the objects
+MemoryAssessmentTable[,1]=MemoryObjects
+#Define a function to determine size        
+MemoryAssessmentFunction=function(x){object.size(get(x))}
+#Apply the function to the objects
+MemoryAssessmentTable[,2]=t(t(sapply(MemoryAssessmentTable[,1],MemoryAssessmentFunction)))
+#Produce a table with the largest objects first
+noquote(MemoryAssessmentTable[rev(order(as.numeric(MemoryAssessmentTable[,2]))),])
+

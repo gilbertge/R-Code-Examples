@@ -1,0 +1,2 @@
+## Count the number of NAs per row
+df$missing <- (apply(df, 1, function(z) sum(is.na(z))))

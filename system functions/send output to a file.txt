@@ -1,0 +1,7 @@
+## Send the output to a file                                                              
+sink("descriptive results.txt")                                                           
+
+   r code here
+   
+## Close the output
+sink()

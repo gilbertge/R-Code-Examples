@@ -1,0 +1,39 @@
+library(foreign)
+library(MASS)
+
+## http://strata.uga.edu/6370/lecturenotes/discriminantFunctionAnalysis.html
+
+df <- read.csv(file.choose())
+
+# Linear Discriminant Analysis with Jacknifed Prediction
+# The code above performs an LDA, using listwise deletion 
+# of missing data. CV=TRUE generates jacknifed (i.e., leave 
+# one out) predictions. The code below assesses the accuracy 
+# of the prediction.
+fit <- lda(factor(category) ~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10, 
+           data=df, 
+           na.action="na.omit", 
+           CV=TRUE)
+fit        # show results
+
+plot(fit) # fit from lda
+
+# Assess the accuracy of the prediction
+# percent correct for each category of G
+ct <- table(df$category, fit$class)
+diag(prop.table(ct, 1))
+# total percent correct
+sum(diag(prop.table(ct)))
+
+# lda() prints discriminant functions based on centered (not standardized) 
+# variables. The "proportion of trace" that is printed is the proportion of 
+# between-class variance that is explained by successive discriminant functions. 
+# No significance tests are produced. Refer to the section on MANOVA for 
+# such tests.
+
+# Quadratic discriminant function does not assume homogeneity of
+# variance-covariance matrices.
+fit <- qda(factor(category) ~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10,
+           data=na.omit(df),
+           prior=c(1,1,1)/3)
+ 

@@ -1,0 +1,24 @@
+## Create the final model dropping variables that are not significant                  
+lr.model2 <- glm(consult.outcome ~                                                     
+                                   adm.respiratory + adm.abdominal + adm.cardiovascular +
+                                   bowel.habits    +                                   
+                                   tenderness,                                         
+                 data = df,                                                            
+                 family = "binomial"                                                   
+              )                                                                        
+                                                                                       
+## Display the logistic regression results of the final model                          
+summary(lr.model2)                                                                     
+                                                                                       
+## Calculate the RR and 95% confidence models for the final model                      
+round(exp(cbind(coef(lr.model2), confint(lr.model2))), digits=2)     
+
+## Calculate the RR/OR "manually" 
+round(exp(coef(m2)), digits=2)
+                     
+# Calculate the lower 95% CI for beta "manually
+exp(summary(m2)$coefficients[,1]-summary(m2)$coefficients[,2]*1.96)  
+
+# Calculate the upper 95% CI for beta  "manually                                                            
+exp(summary(m2)$coefficients[,1]+summary(m2)$coefficients[,2]*1.96)
+                      

@@ -1,0 +1,2 @@
+## Read in data from a SAS Transport file
+df          <- sasxport.get("//v07.med.va.gov/cha/TREP/___new organization/workgroups/wg10_06_sampling_gebregziabher/data/PCT01SRS.xpt")

@@ -1,0 +1,8 @@
+## Install package to produce SAS-like tables                                             
+library(gmodels)                                                                          
+
+## Create Frequency distributions and apply chi-square test for independence           
+CrossTable(y-axis variable, variable across top,                                                      
+           digits=2,                                                                   
+           chisq=TRUE                                                                  
+          )                                                                            

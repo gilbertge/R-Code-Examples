@@ -1,0 +1,5 @@
+## Detach (automatically) loaded packages (if possible)   
+try(detach(package:car)) 
+try(detach(package:Hmisc)) 
+try(detach(package:mvtnorm)) 
+try(detach(package:nortest))

@@ -1,0 +1,96 @@
+## Compute Variance Components for Two Facets (Generalizability Theory)
+## Reference: https://blogs.baylor.edu/grantmorgan/2013/02/11/click-here-for-code-to-compute-variance-components-for-two-facets-generalizability-theory/
+
+## First, I read the data into R and called the object “twofacets”. I've provided the first few rows of the data set below.
+
+head(twofacets)
+
+## Second, we need to enter the number of tasks and raters.
+
+#Enter the number of tasks here
+Nt<-3
+
+#Enter the number of raters here
+Nr<-2
+
+## Next, I'm using a function to estimate the variance components and find the 
+## G coefficient. You will need to have the lme4 and plyr packages installed already.
+
+library(lme4)
+library(plyr)
+
+#The code below is a function that computes and writes out the variance components.
+G.two.facets <- function(data.g, formula.g) {
+  lmer.out              <- lmer(data = data.g, formula = formula.g)
+  var.residual          <-attr(VarCorr(lmer.out), "sc")^2
+  var.comp              <- ldply(VarCorr(lmer.out))
+  names(var.comp)       <- c("Factor", "Variance")
+  var.comp              <- rbind(var.comp, data.frame("Factor" = "Residual", "Variance" = attr(VarCorr(lmer.out), "sc") ^ 2))
+  var.comp$Percent      <- round(var.comp$Variance / sum(var.comp$Variance) * 100, 1)
+  attr(var.comp, "mer") <- lmer.out
+  class(var.comp)       <- c("data.frame", "G")
+  var.comp
+}
+
+## The code below makes certain that the effects in the random effects model are factors.
+twofacets$student <- factor(twofacets$student)
+twofacets$rater   <- factor(twofacets$rater)
+twofacets$task    <- factor(twofacets$task)
+
+## Now that the code is in place, we must run the code to get our variance 
+## components. The formula used below uses a data called “twofacets”“ and 
+## estimates the variance components for factors called "student”“, "task”“, and "rater”.
+
+## The code below runs the function that we entered above with our data and formula.
+
+var.comp <- G.two.facets(twofacets,score ~ 1 + (1 | student) + (1 | task) + (1 | rater) + (1 | student:task) + (1 | student:rater) + (1 | task:rater))
+
+#The lines below will subset the variance components into something we can use.
+var.student       <-var.comp[which(var.comp$Factor=='student'),]
+var.task          <-var.comp[which(var.comp$Factor=='task'),]
+var.rater         <-var.comp[which(var.comp$Factor=='rater'),]
+var.student.rater <-var.comp[which(var.comp$Factor=='student:rater'),]
+var.student.task  <-var.comp[which(var.comp$Factor=='student:task'),]
+var.rater.task    <-var.comp[which(var.comp$Factor=='task:rater'),]
+var.residual      <-var.comp[which(var.comp$Factor=='Residual'),]
+
+#Find the G coefficient
+var.student$Variance / (var.student$Variance + (var.student.task$Variance/Nt) + (var.student.rater$Variance/Nr) + (var.residual$Variance/(Nt*Nr)))
+
+## Answer
+## [1] 0.7779754
+
+##
+## Plot G Coefficients for Different Numbers of Raters and Tasks
+##
+
+## This code can be used for plotting the G coefficients for different 
+## combinations of numbers of raters (up to 10) and tasks (up to 10).
+
+## The piece of code below finds the G coefficient for all permutations 
+## of rater and task frequency (up to 10 of each).
+
+library(ggplot2)
+Ntrange<-c(1:10) Nrrange<-c(1:10) find.g<-expand.grid(Ntrange,Nrrange) names(find.g)<-c("Nt","Nr") find.g$g<-var.student$Variance/(var.student$Variance+(var.student.task$Variance/find.g$Nt)+(var.student.rater$Variance/find.g$Nr)+(var.residual$Variance/(find.g$Nt*find.g$Nr)))
+
+## Now we can plot the G coefficients based on each configuration.
+
+find.g$Nr<-as.factor(find.g$Nr) ggplot(data = find.g, aes(x = Nt, y = g, group = Nr, color = Nr)) + geom_line() + scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"), labels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")) + xlab("Number of Tasks") + ylab("G coefficient") + scale_y_continuous(breaks=seq(0,1,.1)) + theme(legend.position = "right")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

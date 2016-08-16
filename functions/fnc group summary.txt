@@ -1,0 +1,50 @@
+## Summarizes data.                                                                       
+## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
+##   data: a data frame.                                                                  
+##   measurevar: the name of a column that contains the variable to be summariezed        
+##   groupvars: a vector containing names of columns that contain grouping variables      
+##   na.rm: a boolean that indicates whether to ignore NA's                               
+##   conf.interval: the percent range of the confidence interval (default is 95%)         
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,                 
+                      conf.interval=.95, .drop=TRUE) {                                    
+    require(plyr)                                                                         
+                                                                                          
+    # New version of length which can handle NA's: if na.rm==T, don't count them          
+    length2 <- function (x, na.rm=FALSE) {                                                
+        if (na.rm) sum(!is.na(x))                                                         
+        else       length(x)                                                              
+    }                                                                                     
+                                                                                          
+    # This does the summary. For each group's data frame, return a vector with            
+    # N, mean, and sd                                                                     
+    datac <- ddply(data, groupvars, .drop=.drop,                                          
+      .fun = function(xx, col) {                                                          
+        c(N     = length2(xx[[col]], na.rm=na.rm),                                         
+          mean  = round(mean   (xx[[col]], na.rm=na.rm), digits=1),                                         
+          sd    = round(sd     (xx[[col]], na.rm=na.rm), digits=2),
+          median= round(median (xx[[col]], na.rm=na.rm), digits=1),
+          IQR   = round(IQR    (xx[[col]], na.rm=na.rm), digits=2)                                        
+        )                                                                                 
+      },                                                                                  
+      measurevar                                                                          
+    )                                                                                     
+                                                                                          
+    # Rename the "mean" column                                                            
+    datac <- rename(datac, c("mean" = measurevar))                                        
+                                                                                          
+    datac$se <- round(datac$sd / sqrt(datac$N), digits=2)  # Calculate standard error of the mean          
+                                                                                          
+    # Confidence interval multiplier for standard error                                   
+    # Calculate t-statistic for confidence interval:                                      
+    # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1               
+    ciMult <- qt(conf.interval/2 + .5, datac$N-1)                                         
+    datac$ci <- round(datac$se*ciMult, digits=4)                                                         
+                                                                                          
+    return(datac)                                                                         
+}                                                                                         
+
+
+# summarySE provides the standard deviation, standard error of the mean,               
+## and a (default 95%) confidence interval for plotting                                
+dfc <- summarySE(df, measurevar="CONTINUOUS VARIABLE", groupvars=c("GROUP VARIABLE1", "GROUP VARIABLE2", ETC...))                 
+dfc                                                                                     

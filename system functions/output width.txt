@@ -1,0 +1,2 @@
+## Increase the width of the output to 140 characters
+options("width"=160)

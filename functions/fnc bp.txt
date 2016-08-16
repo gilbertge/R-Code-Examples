@@ -1,0 +1,56 @@
+## User-written function for blood pressure
+## User-written function for blood pressure                             
+## Reference: Carretero O, Oparil S. Essential hypertension:            
+##               Part I: Definition and etiology. Hear Dis. 2000;101:329–35. 
+##                                                                      
+## Usage: df$bp <- bp.class(df$systolic, df$diastolic)                  
+##                                                                      
+bp.class <- function(systolic, diastolic) {                             
+                                           bp_category <- ifelse(systolic<120 & diastolic<80, 1, ifelse((systolic>=120 & systolic<130) & (diastolic>=80 & diastolic<85), 2, ifelse((systolic>=130 & systolic<140) || (diastolic>=85 & diastolic<90), 3, 4)))
+                                           return(bp_category)
+                                          }                             
+
+
+## Create indicator variables for the levels of blood pressure          
+df$bp.optimal              <- ifelse(df$bp_category==1, 1, 0)                    
+df$bp.normal               <- ifelse(df$bp_category==2, 1, 0)                    
+df$bp.high_normal          <- ifelse(df$bp_category==3, 1, 0)                    
+df$bp.htn                  <- ifelse(df$bp_category==4, 1, 0)    
+
+## Recode BP levels as missing of SYSTOLIC or DIASTOLIC  are missing
+df$bp                      <- ifelse(is.na(df$systolic) | is.na(df$diastolic), NA, df$bp)   
+df$bp.optimal              <- ifelse(is.na(df$systolic) | is.na(df$diastolic), NA, df$bp.optimal)
+df$bp.normal               <- ifelse(is.na(df$systolic) | is.na(df$diastolic), NA, df$bp.normal)
+df$bp.high_normal          <- ifelse(is.na(df$systolic) | is.na(df$diastolic), NA, df$bp.high_normal)
+df$bp.htn                  <- ifelse(is.na(df$systolic) | is.na(df$diastolic), NA, df$bp.htn)
+df$bp_category             <- ordered(df$bp_category, levels = c(1, 2, 3, 4), labels = c("Optimal", "Normal", "High Normal", "Hypertensive"))   
+                                                                                                                                                
+## Calculate Mean Arterial Pressure                                     
+df$map                     <- (2*df$diastolic + df$systolic)/3          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       
+## Create indicator variables for hypertension
+df$htn_borderline          <- ifelse((systolic>=140 & systolic<150) | (diastolic>=90 & diastolic<95), 1, 0)
+df$htn_mild                <- ifelse((systolic>=140 & systolic<160) | (diastolic>=90 & diastolic<100), 1, 0)
+df$htn_moderate            <- ifelse((systolic>=160 & systolic<180) | (diastolic>=100 & diastolic<110), 1, 0)
+df$htn_severe              <- ifelse(systolic>=180 | diastolic>=110, 1, 0)
+ 
+ ## Create indicator variables for isolated hypertension
+df$isolated_htn            <- ifelse((systolic>=140 & systolic<150) & (diastolic>=90 & diastolic<95), 1, 0)
+df$borderline_isolated_htn <- ifelse((systolic>=140 & systolic<160) | (diastolic>=90 & diastolic<100), 1, 0)

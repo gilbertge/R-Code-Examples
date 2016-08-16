@@ -1,0 +1,2 @@
+## Append output to existing output file
+sink("airway results.txt", append=TRUE)

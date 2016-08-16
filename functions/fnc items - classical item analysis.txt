@@ -1,0 +1,43 @@
+## Classical Item Analysis
+## 
+## The function items will calculate the p-value, the variance, the D based 
+##    on a user specified percent of the examinees (default=27%), the point
+##    biserial, and the biserial. If correct=T (the default) it will remove 
+##    the item in question from the sum score, otherwise it will include that 
+##    item. dpct tells it what percent of the examinees to use at each end 
+##    for calculating D. "digits" tells it how many digits to report after 
+##    the decimal (the default is four).
+## 
+## Thus, items(your.data) will analyze your.data at the default settings, 
+##    while  items(your.data,correct=F,dpct=0.5,digits=3) will analyze it 
+##    without removing the item in question, using 50% instead of 27%, and 
+##    using only 3 digits after the decimal place.
+##
+## Reference: http://www.unt.edu/rss/irt_r_scripts.htm
+ 
+items<-function(testdata,correct=T,dpct=0.27,digits=4){
+n<-ncol(testdata)
+nexmn<-nrow(testdata)
+x<-apply(testdata,1,sum)
+medx<-median(x)
+lowx<-sort(x)[floor((nexmn+1)*dpct)]
+highx<-sort(x)[ceiling((nexmn+1)*(1-dpct))]
+pvalue<-as.numeric(apply(testdata,2,mean))
+var<-as.numeric(apply(testdata,2,var)*(nexmn-1)/nexmn)
+D<-rep(0,n)
+PBis<-rep(0,n)
+Bis<-rep(0,n)
+for (i in 1:n){
+     if (correct==T){
+         xx<-x-testdata[,i]
+	 lowx<-sort(xx)[floor((nexmn+1)*dpct)]
+         highx<-sort(xx)[ceiling((nexmn+1)*(1-dpct))]
+         }
+     else {xx<-x}
+     pu<-mean(testdata[xx >= highx,i])
+     pl<-mean(testdata[xx <= lowx,i])
+     D[i]<-pu-pl
+     PBis[i]<-cor(xx,testdata[,i])
+     Bis[i]<-sqrt(pvalue[i]*(1-pvalue[i]))*PBis[i]/dnorm(qnorm(pvalue[i]))
+}
+return(round((10^digits)*cbind(pvalue,var,D,PBis,Bis))/(10^digits))}

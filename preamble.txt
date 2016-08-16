@@ -1,0 +1,38 @@
+## Specify a serif font (times like) font be used
+par(family="serif")
+
+## Install checkpoint and create checkpoint date to ensure code reproducibility.
+## The first time you run the script, checkpoint will inspect your script (and 
+## other R files in the same project folder) for the packages used, and install 
+## the required packages with versions as of the specified date. (The first time 
+## you run the script, it will take some time to download and install the packages, 
+## but subsequent runs will use the previously-installed package versions.) The 
+## checkpoint package installs the packages in a folder specific to the current 
+## project. If you want to update the packages you use at a later date, just update 
+## the date in the checkpoint() call and checkpoint() will automatically update 
+## the locally-installed packages. 
+## 
+## Read more about checkpoint here:
+##    http://blog.revolutionanalytics.com/2014/10/introducing-rrt.html
+## 
+########################################################
+## ‘checkpoint’ is NOT available (for R version 3.1.0) #
+########################################################
+## library(checkpoint)
+## checkpoint("2014-09-17")
+
+## Update any installed packages
+update.packages(checkBuilt=TRUE, ask=FALSE)
+
+## Set the working directory
+setwd("/Users/gregoryegilbert/Documents/projects/french")
+
+## Read in data from a CSV file
+df          <- read.csv("/Users/gregoryegilbert/Documents/projects/sebro/ars and noon lectures/longitudinal.csv")
+
+## List the variables in the data frame
+names(df)
+
+## Attach the data frame so data frame name does to need to be used
+## with every  variable name
+attach(df)

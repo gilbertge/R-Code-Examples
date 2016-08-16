@@ -1,0 +1,93 @@
+options(repos="http://lib.stat.cmu.edu/R/CRAN/")
+myPackages <- c("foreign", "Hmisc")
+install.packages(myPackages, dependencies=TRUE)
+update.packages(checkBuilt=TRUE, ask=FALSE)
+library(foreign)
+library(Hmisc)
+
+## Specify a serif font (times like) font be used
+par(family="serif")
+
+## Read in the data from a comma-delimited file. 
+## Comma-delimited files must be read in from local drives.
+## "HEADER=TRUE" allows you to use column names
+continuous <- sasxport.get("//v07.med.va.gov/cha/TREP/___new organization/workgroups/wg10_06_sampling_gebregziabher/manuscript/data/continuous_coefficients_all_visn.xpt")
+
+intercept   <- continuous[substr(continuous$iv.visn, 1, 9)=="Intercept",]
+intercept$e <- 7.74
+intercept$l <- 7.58
+intercept$u <- 7.90
+summary(intercept$estimate)
+
+nhb         <- continuous[substr(continuous$iv.visn, 1, 3)=="NHB",]
+nhb$e       <- 0.24
+nhb$l       <- 0.07
+nhb$u       <- 0.40
+summary(nhb$estimate)
+
+hispanic    <- continuous[substr(continuous$iv.visn, 1, 8)=="HISPANIC",]
+hispanic$e  <- 0.12
+hispanic$l  <- -0.04
+hispanic$u  <- 0.28
+summary(hispanic$estimate)
+
+other       <- continuous[substr(continuous$iv.visn, 1, 5)=="OTHER",]
+other$e     <- 0.09
+other$l     <- -0.08
+other$u     <- 0.25
+summary(other$estimate)
+
+o_intercept <- intercept[order(intercept$visn),]
+o_nhb       <- nhb[order(nhb$visn),]
+o_hispanic  <- hispanic[order(hispanic$visn),]
+o_other     <- other[order(other$visn),]
+
+graph.it <- function(var, label, fmt, fn) {
+
+fmt(fn)
+
+## Specify a serif font (times like) font be used
+par(family="serif")
+
+## Plot the data x=year, y=all, type="l" refers to a line graph, 
+## type="b" would refer to symbols contected to a line graph (both),
+## ylim= are the y limits, and ylab=/xlab= are the axis labels
+## yaxt="n"/xaxt="n" means no ticks on the axes
+plot(var$visn, var$estimate, type="b", pch=20, ylim=c(7.25, 8.00), , yaxt="n", xaxt="n", 
+     xlab="Veterans Integrated Service Network (VISN)",
+     ylab="Meta-regression Parameter Estimate", lwd=2)
+
+## Pooled estimates with 95% CI 9.102	(9.034, 9.17)
+lines(var$visn, var$l, lty=5, type="l", col="black", lwd=3)
+lines(var$visn, var$e, lty=3, type="l", col="black", lwd=3)
+lines(var$visn, var$u, lty=5, type="l", col="black", lwd=3)
+
+## Label axis1 (the x-axis) with tick marks at 1 to 23
+axis(1, at=seq(1, 23, 1), cex.axis=0.7)
+
+## Label axis2 (the y-axis) with tick marks at 7.25 to 8, by 0.25 mpr intervals
+axis(2, at=seq(7.25, 8.00, 0.25),
+     labels=c("7.25", "7.50", "7.75", "8.00"))
+
+## Put a legend with the upper left-hand corner at the coordinates (2003.5, 0.85)
+## on the graph. The first Column of the legend will have the types of MPR ratios
+## the second Column will have the corresponding LineTYpe
+legend(7, 7.375, c(label, "Pooled REMR Estimate", "95% Pooled REMR Bounds"), 
+           lty=c(1,3,5), pch=c(20,NA,NA), col=c("black", "black", "black"), 
+           bty="n", 
+           lwd=c(2,3,2)
+      )
+
+dev.off()
+}
+
+setwd("//v07.med.va.gov/cha/TREP/___new organization/workgroups/wg10_06_sampling_gebregziabher/manuscript/plots/figure_1_continuous_all_visns/bw/intercept_lmm")
+
+graph.it(o_intercept,"Intercept",win.metafile,"intercept_lmm_bw.emf")
+graph.it(o_intercept,"Intercept",postscript,  "intercept_lmm_bw.eps")
+graph.it(o_intercept,"Intercept",pdf,         "intercept_lmm_bw.pdf")
+graph.it(o_intercept,"Intercept",png,         "intercept_lmm_bw.png")
+graph.it(o_intercept,"Intercept",jpeg,        "intercept_lmm_bw.jpg")
+graph.it(o_intercept,"Intercept",bmp,         "intercept_lmm_bw.bmp")
+graph.it(o_intercept,"Intercept",tiff,        "intercept_lmm_bw.tif")
+

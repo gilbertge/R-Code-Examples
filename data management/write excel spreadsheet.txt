@@ -1,0 +1,9 @@
+
+## Load xlsx package to write a Microsoft Excel spreadsheet                                         
+library("xlsx")
+
+## Set the working directory                                            
+setwd("/Users/gregoryegilbert/Documents/projects/chung/co_occurence")               
+
+## Write Microsoft Excel spreadsheet
+write.xlsx(df, "co_occurence_preliminary.xlsx")

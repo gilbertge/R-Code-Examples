@@ -1,0 +1,272 @@
+---
+title: "Mind-body Medicine Report"
+author: "Elpida Artemiou, PhD and Gregory E. Gilbert, EdD, MSPH"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    css: style.css
+csl: american-medical-association.csl
+bibliography: mindbody.bib
+---
+
+```{r functions, include=FALSE}
+
+```
+
+```{r knitr_options, include=FALSE}
+## Load knitr package for the program
+library("knitr")
+opts_chunk$set(fig.width=12, fig.height=4, fig.path='RmdFigs/',
+               warning=FALSE, message=FALSE)
+
+## install R/qtl package if necessary:
+if(!require("qtl")) install.packages("qtl", repos="http://cran.us.r-project.org")
+
+## Load the rmarkdown package
+library("rmarkdown")
+
+## Load xlsx package to read in spreadsheets
+library("xlsx")
+```
+
+```{r data_management, include=FALSE}
+## Set the working directory
+setwd("/Users/gregoryegilbert/Documents/projects/RESEARCHER/PROJECT")
+
+## Read in data from a CSV file
+df  <- read.csv("mind body medicine data 20160414.csv")
+df  <- read.xlsx("SPREAEDSHEET.xlsx", 1)
+
+## Print names of variables if ECHO is turned on
+names(df)
+```
+
+### Introduction
+
+Veterinary students experience high levels of stress, anxiety and depression, often relating to adjustment with being away from home, general health issues, academic challenges as well as challenging peer interactions.<sup>@Hafen2008, @Williams2005, @Reisbig2012</sup> In practice, reports suggest further challenges that result in increased stress and anxiety associated with the complexity of the veterinary-client-patient relationship, long working hours, and the inherent challenges of euthanasia consultations etc.<sup>@Williams2005</sup> The magnitude of the problem is further reflected in high levels of compassion fatigue, burnout and suicide rates reported for practicing veterinarians.<sup>@Bartram2010</sup>  
+
+Empirical evidence from human medicine suggests that Mind-Body Therapies (MBTs) are effective strategies in reducing symptoms of stress, anxiety and depression as well as promote a culture of care.<sup>@Regehr2013, @Irving2009, @Karpowicz2009</sup> MBTs include relaxation techniques, meditation, guided imagery, hypnosis, biofeedback, cognitive behavioral therapy, and psychoeducational approaches.<sup>@Astin2003</sup> Veterinary curricula introduced various programs to attend to the students mental needs as well as required skills for a successful veterinarian.<sup>@Williams2005</sup> Although delayed in adopting successful MBTs as in human medicine, interventions such as The Mindful Veterinary Practice Elective at the Western College of Veterinary Medicine<sup>@Dowling2012</sup> provide a promise and a call for further similar initiatives to support the emotional and physical health of veterinary students. 
+
+The primary purpose of this pilot study is to introduce the Georgetown Mind-Body Medicine program to Ross University School of Veterinary Medicine (RUSVM) colleagues; faculty and support staff, and assess its effectiveness. Study results could provide further empirical evidence to support the effectiveness of MBTs in decreasing stress and improving quality of RUSVM colleagues life while promoting support and compassion. Furthermore, participating colleagues will support the implementation of a Mind-Body Medicine program for RUSVM students.
+
+### Theoretical framework
+
+Introduction
+
+#### <I>Link between cortisol and stress</I>
+
+ELPIDA: Discuss the link to cortisol and stress
+
+#### <I>Link between mind-body medicine and stress</I>
+
+ELPIDA: Discuss the link to mind-body medicine and stress
+
+#### <I>Link between cortisol and mind-body medicine</I>
+
+ELPIDA: Discuss the link to cortisol and mind-body medicine
+
+ELPIDA: In conclusion...synthesize above into a model that makes sense based on evidence presented
+
+### Methods
+
+The study will follow a pre-post design. This investigation was approved by the Institutional Review Board of a large offshore United States veterinary medical school where this study was conducted and subscribed to the tenets of the Declaration of Helsinki. All participants were informed of the studey objectives and assented to informed consent.
+
+#### <I>Sample</I>
+
+##### Setting
+
+The Ross University School of Veterinary Medicine is located on the island of St. Kitts; the university is an American Veterinary Medical Association accredited school of veterinary medicine.
+
+ELPIDA: BRIEF HISTORY
+
+To complete a Doctor of Veterinary Medicine (DVM) degree RUSVM requires matriculating students to attend and successfully complete seven 15-week semesters of in-residence coursework at the St. Kitts campus in the West Indies prior to completing three clinical semesters at an American Veterinary Medical Association (AVMA) affiliated institution in the United States, United Kingdom, Ireland, Australia. Admission is granted three times per year in September, January, and May.
+
+##### Participant pool
+
+There are 64 faculty members teaching at the school. A of faculty members are between the age of 30 and 40 with about 25% of faculty members 41 to 50 and 51 to 60 years of age. The majority of faculty members self-identify as White (76%) and non-Hispanic (88%).A little over half of faculty members are male (56%) and almost 70% are male. Fifty-six percent of the faculty are US legal residents; the remaining faculty members come chiefly from St. Kitts and Nevis (22%) and Canada (7%).<sup>@Artemiou2016</sup>
+
+There are 283 support staff at RUSVM. The plurality (38%) of support staff range in age between 30 to 40; approximately one quarter of the support staff are less than 30 (26%) and between the ages of 41 and 50 (23%). Seventy-one percent of the support staff are self-identified as Black and 14% self-identified as White; 3% self-identified as being of Hispanic origin. The majority (56%) of RUSVM staff self-identified as being female. An equal number of staff report being married and single (40%) and 25% of staff reported being legal US residents and approximately 70% reprted being from Saint Kitts and Nevis.<sup>@Artemiou2016</sup>
+
+#### <I>Design</I>
+
+Prior to the mind-body medicine program, RUSVM colleagues will complete two questionnaires: the Mindful Attention Awareness Scale and the Perceived Stress Scale. (REFERENCES) Morning and afternoon saliva cortisol levels will be collected prior to the intervention, one month after the intervention, and three months after the mind-body medicine training.
+
+Accordingly a quasi-experimental pre-post test design will be used to assess the changes in stress levels measured subjectively and objectively.<sup>@cook1979quasi</sup> This design will allow for assessment of changes in stress while controlling for individual differences.
+
+Thirty additional participants were recruited to act as a control for the (1) openness to change factor based on the 16 PF inventory, Perceived Stress Scale, and salivary cortisol.
+
+#### <I>Intervention</I>
+
+All RUSVM faculty and support staff were invited to participate in the Georgetown Experiential Faculty Training Program in mind-body medicine.(REFERENCE) 
+
+The Georgetown Experiential Faculty Training Program...(ELPIDA: FURTHER DESCRIBE)
+
+The program introduced participants to a variety of mind-body medicine therapies for personal experience, as well as for use in teaching, clinical practice, and workplace activities. Participants engaged in a two day retreat. Due to fiscal and logistical constraints the program was offered to a maximum of ten participants. Two facilitators certified in the Georgetown Experiential Faculty Training Program conducted the workshops offered three times between January and August 2016.
+
+#### <I>Dependent variable</I>
+
+The effects of the mind-body medicine program will be assessed by evaluating differences between pre-test and post-test scores ont the Perceived Stress Scale (REFERENCE) and the Mindfulness Awareness Scale (MAS).(REFERENCE)
+
+The Perceived Stress Scale (PSS) is ... make sure to mention the instrument is documented to produce relaiable and valid results.
+
+The Mindfulness Awareness (MAS) is ... make sure to mention the instrument is documented to produce relaiable and valid results.
+
+Additionally, as a biomarker cortisol levels will be measured before and after each WHAT KIND (TRAINING?) session. MORE HERE...
+
+#### <I>Covariables</I>
+
+Participant demographic information was collected. IDemographic data collected included: age at beginning of the study, gender, level (and type) of education, race, ethnicity, country of citizenship, sexual orientation (??? WHY WAS THIS COLLECTED ???), relationship status. Participants were also surveyed with regard to their yoga practice including questions on how often have you participated in yoga practice, how often they have participated in mind-body medicine practice, and if mind-body medicine has been practiced what practice has been used and what approach has been used.
+
+Participants will also complete the 16 Personality Factor (PF) inventory providing the individual’s personality profile. DESCRIBE FURTHER
+
+#### <I>Analysis</I>
+
+Data were entered into a Microsoft Excel(Redmond, WA) spreadsheet and saved in a comma-separated value (CSV) file. Univariate descriptive statistics were used to describe the cohort and will be compared to the faculty and staff profile of the institution.<sup>@Artemiou2016</sup> Means, standard errors (SE), medians, and interquartile ranges (IQR) were calculated for PSS and MAS pre- and post-test scores. <bold>Categorical variable percentages are presented.</bold> The paired Wilcoxon signed rank test was used to test if there was a significant reduction in perceived stress and if there was an increase in mindfulness awareness at a one month. A one-sided hypothesis testing procedures methodology will be used.
+
+ELPIDA: WE STATED THE 16PF WILL BE CORRELATED WITH OPENESS IN PRACTICING MINDFULNESS; HOW ARE YOU MEASURING "PENESS IN PRACTICING MINDFULNESS"?
+
+A linear mixed models (random intercept model) approach was used to assess differences in cortisol levels due to the educational intervention.<sup>@Laird1982</sup>
+
+As this is a study assessed improvement seen after an educational intervention an a priori alpha level of .10.<sup>@Welke2009</sup> All analyses were done using R (Vienna, Austria) software.
+
+### Results
+
+There were twelve individuals who volunteered for the mind-body medicine training and six faculty and staff who volunteered to be controls. Descriptive statistics for salivary cortisol levels can be seen in Table 1. Well-documented morning and afternoon variations in the cortisol levels can be seen.(REFERENCE) Mean and median morning values increased in groups from April to May. However, afternoon corisol values did not increase appreciably.
+
+```{r kable_cortisol, echo=FALSE}
+library("psych")
+
+cort1x <- describe(df$cortisol1_am, IQR=TRUE)
+cort1y <- describe(df$cortisol1_pm,IQR=TRUE)
+cort2x <- describe(df$cortisol2_am, IQR=TRUE)
+cort2y <- describe(df$cortisol2_pm, IQR=TRUE)
+
+## Delete unneeded variables
+drop1 <- names(cort1x) %in% c("vars", "sd", "trimmed", "mad", "max", "min", "range", "skew", "kurtosis")
+cort1 <- cort1x[!drop1]
+cort2 <- cort1y[!drop1]
+cort3 <- cort2x[!drop1]
+cort4 <- cort2y[!drop1]
+
+cort <-rbind(cort1, cort2, cort3, cort4)
+
+# Reorder by column name
+reorder_cort <- cort[c("n", "mean", "se", "median", "IQR")]
+
+vname1 <- c("Morning (4/14/16)", "Afternoon (4/14/16)", "Morning (5/14/16)", "Afternoon (5/14/16)")
+
+kable(cbind(vname1, reorder_cort), 
+      digits=2, 
+      row.names=FALSE, 
+      col.names=c("Cortisol Reading", "n", "Mean", "SE", "Median", "IQR"),
+      align='l',
+      caption="Table 1. Cortisol summary measures"
+     )
+```
+
+```{r pre_post_test, echo=FALSE}
+
+
+xprm <- subset(df, treatment==1)
+cntl <- subset(df, treatment==0)
+
+## Wilcoxon signed rank test. H0: PSS1<=PSS2; H1: PSS1=PSS2
+cort_p1 <- round(wilcox.test(xprm$cortisol1_am, cntl$cortisol1_am)$p.value, digits=4)
+
+cort_p2 <- round(wilcox.test(xprm$cortisol1_pm, cntl$cortisol1_pm)$p.value, digits=4)
+```
+
+A comparison of morning and afternoon cortisol levels between participants receiving the interevention and participants not receiving the intervention can be seen in Table 2. Both groups showed mean and median cortisol levels higher in the morning than afternoon as expected. There was not a significant difference in either cortisol level  (<I>P</I> values=`r cort_p1` and `r cort_p2`, respectively).
+
+```{r exp_cntl_diff, echo=FALSE}
+
+xprm1x <- describe(xprm$cortisol1_am, IQR=TRUE)
+xprm1y <- describe(xprm$cortisol1_pm, IQR=TRUE)
+cntl2x <- describe(cntl$cortisol1_am, IQR=TRUE)
+cntl2y <- describe(cntl$cortisol1_pm, IQR=TRUE)
+
+## Delete unneeded variables
+xprm1 <- xprm1x[!drop1]
+xprm2 <- xprm1y[!drop1]
+cntl3 <- cntl2x[!drop1]
+cntl4 <- cntl2y[!drop1]
+
+cort_test <-rbind(xprm1, xprm2, cntl3, cntl4)
+
+# Reorder by column name
+reorder_cort_test <- cort_test[c("n", "mean", "se", "median", "IQR")]
+
+vname3 <- c("Experimental Group (Morning)", "Experimental Group (Afternoon)", "Control Group (Morning)", "Control Group (Afternoon)")
+
+kable(cbind(vname3, reorder_cort_test, rbind(cort_p1, cort_p2, " ", " ")), 
+      digits=2, 
+      row.names=FALSE, 
+      col.names=c("Cortisol Reading", "n", "Mean", "SE", "Median", "IQR", "P value"),
+      align='l',
+      caption="Table 2. Cortisol summary measures for experimental and control groups"
+     ) 
+
+```
+
+```{r pss_pvalue, echo=FALSE}
+## Wilcoxon signed rank test. H0: PSS1<=PSS2; H1: PSS1>PSS2
+pss_p <- round(wilcox.test(df$pss1, df$pss2, paired=TRUE, alternative="greater")$p.value, digits=4)
+
+## Wilcoxon signed rank test. H0: MAS1>=MAS2; H1: MAS1<MAS2
+mss_p <- round(wilcox.test(df$mss1, df$mss2, paired=TRUE, alternative="less")$p.value, digits=4)
+```
+
+Pre-test and post-test Perceived Stress Scale and Mindful Awareness Scale summary measures can be seen in Table 3. Perceived stress decreased by approximately two points, approximate XX% of the scale - a realistically IMPORTANT/UNIMPORTANT decrease, although it did reach statistical significance (<I>P</I> value=`r pss_p`).
+
+```{r kable_survey, echo=FALSE}
+pss1_summary <- describe(df$pss1, IQR=TRUE)
+pss2_summary <- describe(df$pss2 ,IQR=TRUE)
+mss1_summary <- describe(df$mss1, IQR=TRUE)
+mss2_summary <- describe(df$mss2 ,IQR=TRUE)
+
+pss1x <- as.data.frame(pss1_summary[!drop1])
+pss2x <- as.data.frame(pss2_summary[!drop1])
+mss1x <- as.data.frame(mss1_summary[!drop1])
+mss2x <- as.data.frame(mss2_summary[!drop1])
+
+# Reorder by column name
+reorder_pss1x <- pss1x[c("n", "mean", "se", "median", "IQR")]
+reorder_pss2x <- pss2x[c("n", "mean", "se", "median", "IQR")]
+reorder_mss1x <- mss1x[c("n", "mean", "se", "median", "IQR")]
+reorder_mss2x <- mss2x[c("n", "mean", "se", "median", "IQR")]
+
+vname4 <- c("PSS Pre-test (4/14/16)", "PSS Post-test (5/14/16)", "MASS Pre-test (4/14/16)", "MASS Post-test (5/14/16)")
+
+kable(cbind(vname4, rbind(reorder_pss1x, reorder_pss2x, reorder_mss1x, reorder_mss2x), c(pss_p, " ", mss_p, " ")), 
+      digits=2, 
+      row.names=FALSE, 
+      col.names=c("Instrument", "n", "Mean", "SE", "Median", "IQR", "P value"),
+      align='l',
+      caption="Table 3. Instrument Pre-test/post test summary"
+     )
+```
+
+As expected, there was an appreciable, almost eight point increase in mindfulness awareness. This also reached statistical significance (<I>P</I> value=`r mss_p`).
+
+
+### Discussion
+
+
+
+#### <I>Limitations</I>
+
+
+### Conclusions and future directions
+
+#### Competing interests
+The authors declare that they have no competing interests.
+
+#### Authors' contributions
+EA and GEG contributed to study conception and design. EA drafted the original manuscript and GEG edited the original manuscript making critical revisions. GEG authored the Methods section and the Results section and served as the statistician for the investigation. All authors contributed subsequent revisions of the manuscript. EA formatted the final manuscript and serves as corresponding author. All authors approved the final manuscript.
+
+#### Acknowledgements
+The authors would like to acknowledge Ms. Grqce Carr Benjamin, Librarian, Ross University School of Veterinary Medicine for her help in locating references used in this investigation.
+
+### References

@@ -1,0 +1,8 @@
+## This function will calculate the mode of a variable.
+## If there are multiple modes, it will identify them.
+MODE <- function(x) {
+  x <- sort(x)  
+  u <- unique(x)
+  y <- lapply(u, function(y) length(x[x==y]))
+  u[which( unlist(y) == max(unlist(y)) )]
+} 

@@ -1,0 +1,44 @@
+## Create function to do the two-group plotting of the percent correct scores
+## for each of the six outcome variables.
+
+two.grp.plot <- function(var1, var2, var3, var4) {
+## Produce SAS-like PROC FREQ cross-tabulation
+library(gmodels)
+
+## Update any installed packages
+update.packages(checkBuilt=TRUE, ask=FALSE)
+
+
+                             ## SAS- like table of correct and incorrect scores by week
+                             ## vertical axis is first
+                             ctrl.tbl                            <- CrossTable(var1, var2, digits=2)
+                             ctrl.plot                           <- as.data.frame(ctrl.tbl$prop.row)
+                             colnames(ctrl.plot)                 <- c("Week", "Group", "Pct.Correct")
+                             ctrl.plot$Week                      <- as.numeric(ctrl.plot$Week)
+                             ctrl.plot$Group                     <- as.numeric(ctrl.plot$Group)
+                             ctrl.plot                           <- subset(ctrl.plot, ctrl.plot$Group==2)
+                             ctrl.plot$Group[ctrl.plot$Group==2] <- 0
+                             
+                             exp.tbl                             <- CrossTable(var3, var4, digits=2)
+                             exp.plot                            <- as.data.frame(exp.tbl$prop.row)
+                             colnames(exp.plot)                  <- c("Week", "Group", "Pct.Correct")
+                             exp.plot$Week                       <- as.numeric(exp.plot$Week)
+                             exp.plot$Group                      <- as.numeric(exp.plot$Group)
+                             exp.plot                            <- subset(exp.plot, exp.plot$Group==2)
+                             exp.plot$Group[exp.plot$Group==2]   <- 1
+                             
+                             
+                             ##plot.new()
+                             plot(ctrl.plot$Week[ctrl.plot$Group==0], ctrl.plot$Pct.Correct[ctrl.plot$Group==0], type="l", ylim=c(0, 1), yaxt="n", xaxt="n", xlab="Week",
+                             ylab="Percentage Correct")
+                             
+                             ## Label axis1 (the x-axis) with tick marks at 1 to 8, by 1 week intervals
+                             axis(1, at=seq(1, 8, 1))
+                             
+                             ## Label axis2 (the y-axis) with tick marks at 0 to 1, by .1 intervals
+                             axis(2, at=seq(0, 1, 0.1), cex.axis=.85)
+                             
+                             ## Overlay other variables on the same plot with different LineTYpes
+                             lines(exp.plot$Week[exp.plot$Group==1], exp.plot$Pct.Correct[exp.plot$Group==1], lty=5)
+                             
+                    }      

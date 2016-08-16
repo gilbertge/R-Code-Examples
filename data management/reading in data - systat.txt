@@ -1,0 +1,3 @@
+# input Systat file
+library(foreign)
+mydata <- read.systat("c:/mydata.dta")

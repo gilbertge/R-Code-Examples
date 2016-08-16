@@ -1,0 +1,44 @@
+## Detailed weight ranges: http://apps.who.int/bmi/index.jsp?introPage=intro_3.html
+
+## User-written function to define BMI
+##
+## Usage: df$bmi               <- bmi(df$wt,(df$ht/100))                                                                 
+##        
+bmi <- function(kg, meters) {                             
+                             bmi <- kg/(meters*meters)
+                             return(bmi)
+                            } 
+                                                        
+
+## Range check for BMI
+##                    
+badBMI <- subset(df, df$bmi<15)
+keep_vars <- c("id", "bmi", "ht", "wt")
+badBMI <- badBMI[keep_vars]
+writeLines("*******************************************************\n*                                                     *\n*                 Incorrect BMI Values                *\n*                                                     *\n*******************************************************")
+print(badBMI) 
+writeLines("\n\n\n")  
+               
+                  
+## User-written function to define obesity.
+## Reference: http://www.who.int/mediacentre/factsheets/fs311/en/
+##            https://www.urmc.rochester.edu/highland/bariatric-surgery-center/questions/morbid-obesity.aspx
+##
+## Usage: df$obesity_category  <- obesity.class(df$bmi)
+##        df$obesity_category  <- ifelse(is.na(df$bmi), NA, df$obesity_category)
+##        df$obesity_category  <- ordered(df$obesity_category, levels = c(1, 2, 3, 4, 5), labels = c("Underweight", "Normal", "Overweight", "Obese", "Morbidly Obese"))
+##    
+obesity.class <- function(bmi) {                             
+                                obesity_category <- ifelse(bmi<25, 1, ifelse((bmi>=25 & bmi<30), 2, ifelse((bmi>=30 & bmi<40), 3, 4)))           
+                                return(obesity_category)
+                               } 
+                                                                                                       
+                               
+
+## User-written function to define QUETELET
+##
+## Usage: df$quetelet <- quetelet(wt, ht/100) (weight in pounds; height in inches)
+##
+quetelet <- function(lbs, in) {                             
+                             lbs/(in*in)
+                            }                             

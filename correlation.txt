@@ -1,0 +1,26 @@
+## Load the package for constructing a Corrogram
+library("corrgram") 
+
+## Only correlations for numeric variables can be calculated
+## so keep only numic variables
+keep_vars <- c("age", "female", "asian_pi", "unk", "native_hi_pi", "black", "hispanic", "ugpa", "mcat_bs", "mcat_ps", "mcat_vb", "merp", "mini_score", "mini.passage", "final_score", "final.passage") 
+corr <- raw[keep_vars]
+
+## Reference: http://www.statmethods.net/advgraphs/correlograms.html
+round(cor(corr, use="complete.obs"), digits=2)
+
+## Close output so correlogram can be outputted
+##sink()
+
+## Construct corrogram for data
+tiff("corrogram.tiff")
+   corrgram(mini.corr, 
+            order=TRUE, 
+            lower.panel=panel.shade, 
+            upper.panel=panel.pie, 
+            text.panel=panel.txt
+           )
+dev.off()
+
+## Append output with additional results
+##sink("airway results.txt", append=TRUE)

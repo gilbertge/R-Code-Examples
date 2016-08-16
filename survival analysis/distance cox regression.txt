@@ -1,0 +1,43 @@
+library(survival)
+library(Hmisc)
+library(sas7bdat)
+
+setwd("//v07.med.va.gov/cha/TREP/___new organization/workgroups/wg11_04_distance")
+
+hsrd_data <- read.csv("cohort.csv")
+head(hsrd_data)
+
+myBys <- data.frame(hsrd_data$id)
+
+firstObs <- by(hsrd_data, myBys, head, n=1)
+
+# To put this into a data frame we use: do.call
+failure_time_data <- do.call("rbind", as.list(firstObs))
+head(failure_time_data)
+
+dx_cox          <- coxph(Surv(survival_years, dead)~distance, failure_time_data)
+summary(dx_cox)
+
+
+dx_binary_cox   <- coxph(Surv(survival_years, dead)~distance_50, failure_time_data)
+summary(dx_binary_cox)
+
+
+dx_category_cox <- coxph(Surv(survival_years, dead)~distance_30_60 + distance_60_90 + distance_gt_90, failure_time_data)
+summary(dx_category_cox)
+
+
+
+
+
+
+dx_cox_adjusted <- coxph(Surv(survival_years, dead)~distance + nhb + hispanic + other + unk_race + age_centered + female + not_married + not_employed + cancer + cbv + chf + cvd + pvd + depress + psychoses + subabuse, failure_time_data)
+summary(dx_cox_adjusted)
+
+
+dx_binary_cox_adjusted <- coxph(Surv(survival_years, dead)~distance_50 + nhb + hispanic + other + unk_race + age_centered + female + not_married + not_employed + cancer + cbv + chf + cvd + pvd + depress + psychoses + subabuse, failure_time_data)
+summary(dx_binary_cox_adjusted)
+
+
+dx_category_cox_adjusted <- coxph(Surv(survival_years, dead)~distance_30_60 + distance_60_90 + distance_gt_90 + nhb + hispanic + other + unk_race + age_centered + female + not_married + not_employed + cancer + cbv + chf + cvd + pvd + depress + psychoses + subabuse, failure_time_data)
+summary(dx_category_cox_adjusted)

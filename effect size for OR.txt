@@ -1,0 +1,56 @@
+## Install package for computing effect sizes
+library(compute.es)
+
+## Generate Bibtex citation for the package
+citation("compute.es")
+
+## Update any installed packages                                        
+update.packages(checkBuilt=TRUE, ask=FALSE)                             
+
+## lor is the log odds ratio
+## var.lor is the variance of the log odds ratio, var=n(SE)^2
+## n.1 is the treatment group sample size (tx.n)
+## n.2 is the control group sample size (cntl.n)
+## level is the CI size
+## dig is the number of digits to display
+
+## Mini
+lor    <- -.41414
+se     <- .11419
+tx.n   <- 1066
+cntl.n <- 515
+    
+## Variance of the log OR (lor)
+var <- (tx.n + cntl.n)*se^2
+
+## The sign of Cohen's d is determined by which mean you put in first. 
+## It basically just indicates you had a mean increase from group A to group B. 
+## The same mean difference, but flipped for A and B would give you the same number, 
+## but positive. Therefore, sign does not tell you anything about effect size.
+
+#####################################################
+#                                                   #
+#                   Mini Exam                       #
+#                                                   #
+#####################################################
+lor    <- -.41414
+se     <- .11419
+tx.n   <- 1066
+cntl.n <- 515
+    
+## Variance of the log OR (lor)
+var <- (tx.n + cntl.n)*se^2
+
+## Compute ES for Mini Exam with compute.es package
+(  lores(lor, var, tx.n, cntl.n, level=95, dig=2)   )
+
+## Double check
+## Reference: Borenstein, M., Hedges, L., Higgins, J., & Rothstein, H. (2009). 
+##            Converting among effect sizes. In Introduction to meta-analysis. 
+##            New York: John Wiley & Sons, Ltd.
+( d.mini     <- lor*sqrt(3)/pi )
+( var.d.mini <- var*3/pi^2 )
+
+## The effect size is .23 and negative for the mini exam. This is interpreted a small ES.
+## As it it negative we can take this to mean there was an increase from the Lecture
+## group to the Simulation+Lecture group - consistent with our results

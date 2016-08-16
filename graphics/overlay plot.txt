@@ -1,0 +1,17 @@
+plot.new()
+plot(cd.plot$Week, cd.plot$cd.control.correct, type="l", ylim=c(0, 1), yaxt="n", xaxt="n", xlab="Week",
+ylab="Correct (Percentage)", sub="Cervical Diameter")
+
+## Label axis1 (the x-axis) with tick marks at 1 to 8, by 1 week intervals
+axis(1, at=seq(1, 8, 1))
+
+## Label axis2 (the y-axis) with tick marks at 0 to 1, by .1 intervals
+axis(2, at=seq(0, 1, 0.1), cex.axis=.85)
+
+## Overlay other variables on the same plot with different LineTYpes
+lines(cd.plot$Week, cd.plot$cd.intervention.correct, lty=5)
+
+## Put a legend with the lower right-hand corner at the coordinates ((week) 6, and
+## (percentage) .4 on the graph. The first Column of the legend will have the line
+## types corresponding to the second column the Control and Intervention.
+legend(6, .4, c("Control", "Intervention"), lty=c(1, 5))

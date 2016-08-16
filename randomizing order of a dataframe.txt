@@ -1,0 +1,9 @@
+# Create a data frame
+( data <- data.frame(slides=1:20) )
+
+## Specify the seed for random number generation
+set.seed(10231995)
+
+# Randomize the order of the data frame
+( randomized <- data[sample(1:nrow(data)), ] )
+

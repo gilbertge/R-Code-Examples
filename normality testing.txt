@@ -1,0 +1,32 @@
+## Load normality testing library
+library(nortest)
+
+## Normality will be tested using normal probability plots and the Anderson-Darling, 
+##    Shapiro-Francia, and the Shapiro-Wilk normality tests(Anderson et al., 1954; 
+##    Shapiro et al., 1972; Shapiro & Wilk, 1965). The Anderson-Darling test is the 
+##    recommended empirical distribution function test by Stephens compared to other 
+##    tests of normality giving more weight to the tails of the distribution than the 
+##    Cramer-von Mises test(Stephens, 1986). The Shapiro-Francia test was chosen because 
+##    of its known performance and the Shapiro-Wilk test was chosen because it is one of 
+##    the best-known tests for normality. 
+## 
+## References: 
+##    Anderson T., Darling DA. A test of goodness-of-fit. 
+##       J Am Stat Assoc. 1954;49(268):765–9. 
+##    Shapiro SS, Francia RS. An approximate analysis of variance 
+##       test for normality. J Am Stat Assoc.; 1972 Apr 5;67(337):215–6. 
+##    Shapiro SS, Wilk MB. An analysis of variance test for 
+##       normality (complete samples). Biometrika. 1965 Dec 1;52(3-4):591–611. 
+##    Stephens M. Tests based on EDF statistics. In: D’Agostino, Ralph B 
+##       and Stephens M, editor. Goodness-of-Fit Techniques. New York: 
+##       Marcel Dekker; 1986.
+
+tiff("benefits.tiff")
+     qqnorm(df$benefits)
+     qqline(df$benefits)
+dev.list()
+
+writeLines("************************************ \n*****      Normality Tests     ***** \n************************************")
+ad.test(df$pretest)
+sf.test(df$pretest)
+shapiro.test(df$pretest)

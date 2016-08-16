@@ -1,0 +1,24 @@
+## Install package to produce SAS-like tables                                             
+library(gmodels)  
+
+## Install package for odds ratios                                             
+library(fmsb)  
+
+## Generate data for odds ratio calculation
+CrossTable(disease, exposure,                                                      
+           digits=2,                                                                   
+           chisq=TRUE                                                                  
+          )
+          
+## oddsratio(a, b, c, d, conf.level=0.95) 
+## a	The number of individuals who suffer from disease and are exposured.
+## b	The number of individuals who suffer from disesase and are not exposed.
+## c	The number of individuals who do not suffer from disease and are exposed.
+## d	The number of individuals who do not suffer from disease and are not exposed.
+##
+## a The number of individuals in the traditional group and passing the final exam.
+## b The number of individuals in the traditional group and failing the final exam.
+## c The number of individuals in the simulation group and passing the final exam.
+## d The number of individuals in the simulation group and failing the final exam.
+
+oddsratio(a, b, c, d, conf.level=0.95)

@@ -1,0 +1,79 @@
+## Load the ggplot2 package for high quality pplots
+library(ggplot2)
+
+## Load the xlsx package to read in spreadsheets
+library(xlsx)
+
+## Update any installed packages                                        
+update.packages(checkBuilt=TRUE, ask=FALSE) 
+
+## Set the working directory                                            
+setwd("/Users/gregoryegilbert/Documents/projects/abney/correlation")  
+
+# read in the first worksheet from the workbook S4XGB201620-FM4X.xlsx
+# first row contains variable names
+fm4x <- read.xlsx("S4XGB201620-FM4X.xlsx", 1)
+
+## Calculate the Pearson Product-moment Correlation Coefficient
+## Reference: http://www.statmethods.net/advgraphs/correlograms.html
+lb1 <- paste("R^2 == ", round(cor(fm4x$FM4XCU, fm4x$FM4XCOMP, use="complete.obs")^2, digits=2))
+
+tiff("fm4x linear.tiff")
+ggplot(fm4x, aes(x=FM4XCU, y=FM4XCOMP))                                                   +
+       geom_point(shape=1)                                                                +    # Use hollow circles
+       geom_smooth(method=lm,                                                                  # Add linear regression line
+                   se=FALSE)                                                              +    # Don't add shaded confidence region
+       ggtitle("Scatterplot of Cumulative Score by Comp Score \n Semester 4X (May 2016)") +    # Add main title
+       xlab("Cumulative Score")                                                           +    # Label X axis
+       ylab("Comprehensive Exam Score")                                                   +    # Label Y axis
+       annotate("text", x=65, y=80, label=lb1, parse=TRUE, size=8)                             # Annotate correlation coefficient on plot
+dev.off()
+
+tiff("fm4x loess.tiff")
+ggplot(fm4x, aes(x=FM4XCU, y=FM4XCOMP))                                                   +
+       geom_point(shape=1)                                                                +    # Use hollow circles
+       geom_smooth()                                                                      +    # Add a loess smoothed fit curve with confidence region
+       ggtitle("Scatterplot of Cumulative Score by Comp Score \n Semester 4X (May 2016) \n Loess Smoothed Fit with Confidence Region") +    # Add main title
+       xlab("Cumulative Score")                                                           +    # Label X axis
+       ylab("Comprehensive Exam Score")                                                   +    # Label Y axis
+       annotate("text", x=65, y=80, label=lb1, parse=TRUE, size=8)                             # Annotate correlation coefficient on plot
+       #> geom_smooth: method="auto" and size of largest group is <1000, so using loess. Use 'method = x' to change the smoothing method.
+dev.off()
+
+# read in the first worksheet from the workbook S05GB201620-FM05.xlsx
+# first row contains variable names
+fm5  <- read.xlsx("S05GB201620-FM05.xlsx", 1)
+
+## Calculate the Pearson Product-moment Correlation Coefficient
+## Reference: http://www.statmethods.net/advgraphs/correlograms.html
+lb2 <- paste("R^2 == ", round(cor(fm5$FM05CU, fm5$FM05COMP, use="complete.obs")^2, digits=2))
+
+tiff("fm5 linear.tiff")
+ggplot(fm5, aes(x=FM05CU, y=FM05COMP))                                                    +
+       geom_point(shape=1)                                                                +    # Use hollow circles
+       geom_smooth(method=lm,                                                                  # Add linear regression line
+                   se=FALSE)                                                              +    # Don't add shaded confidence region
+       ggtitle("Scatterplot of Cumulative Score by Comp Score \n Semester 5 (May 2016)")  +    # Add main title
+       xlab("Cumulative Score")                                                           +    # Label X axis
+       ylab("Comprehensive Exam Score")                                                   +    # Label Y axis
+       annotate("text", x=38, y=65, label=lb2, parse=TRUE, size=8)                             # Annotate correlation coefficient on plot
+dev.off()
+
+tiff("fm5 loess.tiff")
+ggplot(fm5, aes(x=FM05CU, y=FM05COMP))                                                    +
+       geom_point(shape=1)                                                                +    # Use hollow circles
+       geom_smooth()                                                                      +    # Add a loess smoothed fit curve with confidence region
+       ggtitle("Scatterplot of Cumulative Score by Comp Score \n Semester 5 (May 2016) \n Loess Smoothed Fit with Confidence Region") +    # Add main title
+       xlab("Cumulative Score")                                                           +    # Label X axis
+       ylab("Comprehensive Exam Score")                                                   +    # Label Y axis
+       annotate("text", x=38, y=65, label=lb2, parse=TRUE, size=8)                             # Annotate correlation coefficient on plot
+       #> geom_smooth: method="auto" and size of largest group is <1000, so using loess. Use 'method = x' to change the smoothing method.
+dev.off()
+
+## LOESS smoothing builds on "classical" methods, such as linear and nonlinear least squares regression. It addresses situations in which the classical procedures do not perform well or cannot be effectively applied without  undue labor. LOESS combines much of the simplicity of linear least squares regression with the flexibility of nonlinear regression.  One of the chief attractions of this method is that specification of a global function of any form to fit a model to the data is not needed, only to fit segments of the data.
+
+
+
+
+
+

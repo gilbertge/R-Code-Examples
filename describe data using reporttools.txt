@@ -1,0 +1,28 @@
+## install.packages("reporttools")
+library("reporttools")
+
+vars <- c("alb", "alp", "alt", "amy", "tbil", "bun", "ca", "phos", "cre", "glu", "na", "k", "tp", "glob", "wbc", "lym", "mon", "neu", "eos", "bas", "ly", "mo", "be", "eo", "ba", "rbc", "hgb", "hct", "mcv", "mch", "mchc", "rdwc", "plt", "pct", "mpv", "pdwc")
+
+## supply user-defined statistics: trimmed mean and IQR as an unbiased estimate
+## of the population standard deviation in case of normal data
+my.stats <- list("n", "mean", "se"=function(x){return( var(x)/ )}, "median", "iqr", "na")
+
+
+## display default statistics, provide neither group nor weights
+tableContinuous(vars=df.desc, 
+                group=time, 
+                stats=my.stats,
+                print.pval = "kruskal", cap = "Table of continuous variables.", lab = "tab: descr stat")
+
+
+                stats=c("n", "mean", "s", "median", "iqr", "na"), 
+                
+sapply(df.desc, function(cl) list(means=mean(cl,na.rm=TRUE), sds=sd(cl,na.rm=TRUE), medians=median(cl,na.rm=TRUE)
+))
+
+
+as.data.frame( t(sapply(df.desc, function(cl) list(means  =mean(cl,na.rm=TRUE), 
+                                                   sds    =sd(cl,na.rm=TRUE),
+                                                   medians=median(cl,na.rm=TRUE),
+                                                   IQRs   =IQR(cl,na.rm=TRUE)   ))
+

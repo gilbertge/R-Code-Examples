@@ -1,0 +1,39 @@
+## Overlay the normal curve on a histogram. 
+## This normal curve does not fit the data, but
+## is normal curve with a mean of 10 and standard
+## deviation of 1. 
+
+## Generate 30 scores from 16 to 20
+set.seed(07011929)
+scores <- sample(16:20, 30, replace=T)
+
+## Generate 100,000 random deviates with
+##    mean 10 and standard deviation of 1
+set.seed(05032001)
+nrm <- rnorm(n=100000, m=10, sd=1)
+
+## Calulate the mean and standard deviation 
+## of the normal deviates
+m   <- mean(nrm)
+std <- sqrt(var(nrm))
+
+jpeg(filename="/Users/gregoryegilbert/Documents/Methods and Measurement/methods in measurement - geg/are my data normal/normal_curve_plus.jpg", quality=300)
+## Construct the histogram
+hist(scores, 
+     prob=TRUE, 
+     right=FALSE,
+     xlab="Checklist Scores", 
+     ylab="Relative Frequency", 
+     ylim=c(0, 0.6), 
+     xlim=c(0, 20),
+     col="grey",
+     main=""
+    )
+    
+## Create the normal curve and overlay it. 
+curve(dnorm(x, mean=m, sd=std), 
+      col="darkblue", 
+      lwd=2, 
+      add=TRUE
+     )
+dev.off()

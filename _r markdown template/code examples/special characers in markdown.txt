@@ -1,0 +1,6 @@
+single curly quote &lsquo;
+double curly quote &ldquo;
+short dash         &endash;
+long dash          &emdash;
+ellipsis           &hellip;
+mean symbol        $\bar{x}$
