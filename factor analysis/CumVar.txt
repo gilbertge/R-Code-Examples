@@ -1,0 +1,4 @@
+## This function calulates the sum of the proportiaonal variances 
+##   (or cumulative variances) for each factor in a factor analyis. 
+##   It returns a vector.
+CumVar <- function(model) {cumsum(colSums(model$loading*model$loading)/dim(model$loading)[1]) } 
