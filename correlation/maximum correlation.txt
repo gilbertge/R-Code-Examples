@@ -1,0 +1,12 @@
+d <- round(cor(DATAFRAME_HERE, use="complete.obs"), digits=2)
+results <- data.frame(v1=character(0), v2=character(0), cor=numeric(0), stringsAsFactors=FALSE)
+diag(d) <- 0
+while (sum(d>0)>1) {
+  maxval <- max(d)
+  max <- which(d==maxval, arr.ind=TRUE)[1,]
+  results <- rbind(results, data.frame(v1=rownames(d)[max[1]], v2=colnames(d)[max[2]], cor=maxval))
+  d[max[1],] <- 0
+  d[,max[1]] <- 0
+  d[max[2],] <- 0
+  d[,max[2]] <- 0
+}
