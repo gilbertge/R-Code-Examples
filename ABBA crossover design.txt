@@ -1,0 +1,26 @@
+## Do analysis for an AB/BA crossover design. Given data in this format:
+## id product period score 
+## 1  A       1      2.3 
+## 1  B       2      3.4 
+## .
+## .
+## .
+## 10 B       1      5.6 
+## 10 A       2      7.8 
+##
+id      <- as.integer(c(1, 1, 2 ,2 ,3 ,3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10))
+product <- c("A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B")
+period  <- as.integer(c(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2))
+score   <- as.numeric(c(2.3, 3.4,  4.7, 1.7, 4.4, 7.7, 4.9, 2.9, 7.4, 9.0, 1.2, 5.6, 6.9, 5.3, 7.5, 9.7, 4.8, 2.9, 5.6, 7.8))
+##
+mydata <- as.data.frame(cbind(id, product, period, score))
+##
+## If the formula contains a single Error term, this is used to specify error strata, 
+## and appropriate models are fitted within each error stratum.
+## 
+summary(aov(score~ factor(product)* factor(period) + Error(factor(id), data=mydata)))
+## 
+## For nonparametric data Conover states it is acceptable to use parametric methods on 
+## the ranks of data.
+## 
+summary(aov(rank(score)~ factor(product)* factor(period) + Error(factor(id), data=mydata)))

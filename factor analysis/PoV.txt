@@ -1,0 +1,3 @@
+## This function calulates the proportional variance 
+##   for each factor in a factor analyis. It returns a vector.
+PoV <- function(model) {colSums(model$loading*model$loading)/dim(model$loading)[1] }
