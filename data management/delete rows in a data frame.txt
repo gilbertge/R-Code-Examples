@@ -1,0 +1,2 @@
+## Delete rows in a data frame
+myData <- myData[-c(2, 4, 6), ]
