@@ -1,0 +1,10 @@
+## Find the location of theminimum & maximum correlations in the correlation matrix
+## Replace diagonal components with NA so they no not skew results
+pearson.corr <- round(cor(items, use="complete.obs"), digits=2)
+diag(pearson.corr) <- "NA"
+min.corr <- arrayInd(which.min(pearson.corr), dim(pearson.corr))
+max.corr <- arrayInd(which.max(pearson.corr), dim(pearson.corr))
+
+## Extract the maximum and Minimum correlation values for inclusion in Results
+min_r <- pearson.corr[min.corr]
+max_r <- pearson.corr[max.corr]
