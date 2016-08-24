@@ -17,8 +17,11 @@ mydata <- as.data.frame(cbind(id, product, period, score))
 ##
 ## If the formula contains a single Error term, this is used to specify error strata, 
 ## and appropriate models are fitted within each error stratum.
+##
+## Really what this means is the additive effects of the fixed terms product and 
+## period there is a random effect, ID.
 ## 
-summary(aov(score~ factor(product)* factor(period) + Error(factor(id), data=mydata)))
+summary(aov(score~ factor(product)* factor(period) + Error(factor(id)), data=mydata)))
 ## 
 ## For nonparametric data Conover states it is acceptable to use parametric methods on 
 ## the ranks of data.
