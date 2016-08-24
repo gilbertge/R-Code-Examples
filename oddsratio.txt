@@ -1,8 +1,8 @@
 ## Install package to produce SAS-like tables                                             
-library(gmodels)  
+library("gmodels")  
 
 ## Install package for odds ratios                                             
-library(fmsb)  
+library("fmsb")  
 
 ## Generate data for odds ratio calculation
 CrossTable(disease, exposure,                                                      
