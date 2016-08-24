@@ -1,6 +1,7 @@
-# read in the first worksheet from the workbook myexcel.xlsx
-# first row contains variable names
+# Load the XLSX package to read an excel spreadsheet
 library("xlsx")
+
+## Read in the spreadsheet by location e.g. the first worksheet
 mydata <- read.xlsx("c:/myexcel.xlsx", 1)
 
 # read in the worksheet named mysheet
