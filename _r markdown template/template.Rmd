@@ -24,11 +24,23 @@ opts_chunk$set(fig.width=12, fig.height=4, fig.path='RmdFigs/',
 ## install R/qtl package if necessary:
 if(!require("qtl")) install.packages("qtl", repos="http://cran.us.r-project.org")
 
+## Load the CHECKPOINT package to create a date specific version
+## of the R packages being used for reeproducible resutls.
+##
+## Read more about checkpoint here:                                     
+##    http://blog.revolutionanalytics.com/2014/10/introducing-rrt.html  
+##                                                                      
+library("checkpoint")                                                     
+checkpoint("2016-08-22")                                                
+                          
 ## Load the rmarkdown package
 library("rmarkdown")
 
 ## Load xlsx package to read in spreadsheets
 library("xlsx")
+
+## Update any installed packages
+update.packages(ask = FALSE, repos = 'http://cran.rstudio.org')
 ```
 
 ```{r data_management, include=FALSE}
