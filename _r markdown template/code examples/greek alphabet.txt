@@ -1,0 +1,28 @@
+name	    MarkUp                       LaTeX       
+-----------------------------------------------------
+alpha	    \( \alpha \ A \)	           \alpha A
+beta	    \( \beta \ B \)	             \beta B
+gamma	    \( \gamma \ \Gamma \)	       \gamma \Gamma
+delta	    \( \delta \ \Delta \)	       \delta \Delta
+epsilon	  \( \epsilon \ E \)	         \epsilon E
+(epsilon)	\( \varepsilon \ E \)	       \varepsilon
+zeta	    \( \zeta \ Z \)	             \zeta Z
+eta	      \( \eta \ H \)	             \eta \Eta
+theta	    \( \theta \ \Theta \)	       \theta \Theta
+iota	    \( \iota \ I \)	             \iota I
+kappa	    \( \kappa \ K \)	           \kappa K
+lambda	  \( \lambda \ \Lambda \)	     \lambda \Lambda
+mu	      \( \mu \ M \)	               \mu M
+nu	      \( \nu \ N \)	               \nu N
+xi	      \( \xi \ \Xi \)	             \xi \Xi
+omicron	  \( \omicron \ O \)	         \omicron O
+pi 	      \( \pi \ \Pi \)	             \pi \Pi
+rho	      \( \rho \ P \)	             \rho P
+sigma	    \( \sigma \ \Sigma \)	       \sigma \Sigma
+tau	      \( \tau \ T \)	             \tau \Tau
+upsilon	  \( \upsilon \ Y \)	         \upsilon Y
+phi	      \( \phi \ \Phi \)	           \phi \Phi
+(phi)	    \( \varphi \)	               \varphi
+chi	      \( \chi \ X \)	             \chi X
+psi	      \( \psi \ \Psi \)	           \psi \Psi
+omega	    \( \omega \ \Omega \)	       \omega \Omega
